@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Salsa: Gothic Command Trainer</title>
+		<title>Salsa: Saucy Command Trainer</title>
 		<script src="https://cdn.tailwindcss.com"></script>
 		<link
 			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;900&display=swap"
@@ -12,8 +12,8 @@
 		<style>
 			body {
 				font-family: 'Inter', sans-serif;
-				background-color: #020617;
-				color: #e2e8f0;
+				background-color: #1A0A2E;
+				color: #EDE5F4;
 			}
 			.font-mono {
 				font-family: 'JetBrains Mono', monospace;
@@ -62,9 +62,9 @@
 
 			/* Custom Scrollbar */
 			::-webkit-scrollbar { width: 8px; }
-			::-webkit-scrollbar-track { background: #1e293b; }
-			::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-			::-webkit-scrollbar-thumb:hover { background: #475569; }
+			::-webkit-scrollbar-track { background: #1A0A2E; }
+			::-webkit-scrollbar-thumb { background: #4A2D75; border-radius: 4px; }
+			::-webkit-scrollbar-thumb:hover { background: #6B2FA0; }
 
 			/* Hide scrollbar for chips */
 			.no-scrollbar::-webkit-scrollbar { display: none; }
@@ -96,20 +96,20 @@
 				border-radius: 9999px;
 				font-size: 0.75rem;
 				font-weight: 600;
-				background: #1e293b;
-				color: #94a3b8;
-				border: 1px solid #334155;
+				background: #2E1B4E;
+				color: #A78BBE;
+				border: 1px solid #3D2563;
 				cursor: pointer;
 				transition: all 0.2s;
 				flex-shrink: 0;
 			}
 			.chip:hover {
-				background: #334155;
+				background: #3D2563;
 			}
 			.chip-active {
-				background: #9a3412;
-				color: #fb923c;
-				border-color: #c2410c;
+				background: #7B1450;
+				color: #FF2D9B;
+				border-color: #E4007C;
 			}
 
 			/* Sound Wave Animation */
@@ -148,7 +148,7 @@
 				left: 0;
 				z-index: 100;
 				padding: 0.5rem 1rem;
-				background: #d97706;
+				background: #E4007C;
 				color: #fff;
 				font-weight: 700;
 				text-decoration: none;
@@ -168,42 +168,43 @@
 
 		<!-- Onboarding Overlay -->
 		<div id="onboarding" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-			<div class="bg-slate-900 border border-slate-700 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
+			<div class="bg-[#231340] border border-[#4A2D75] rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
 				<div class="text-5xl mb-4">🐾</div>
-				<h2 class="text-2xl font-black text-slate-100 mb-2">Welcome to Salsa</h2>
-				<p class="text-slate-400 mb-6">Train Salsa with 100 Gothic dog commands and audio flashcards.</p>
+				<h2 class="text-2xl font-black text-[#F3E8FF] mb-2">Welcome to Salsa</h2>
+				<p class="text-[#A78BBE] mb-6">Train Salsa with 100 saucy commands. Tear open a packet and learn!</p>
 				<div class="grid grid-cols-2 gap-3 mb-6 text-sm">
-					<div class="bg-slate-800 rounded-lg p-3">
-						<span class="bg-slate-700 px-2 py-0.5 rounded text-xs border border-slate-600 font-mono">SPACE</span>
-						<p class="text-slate-400 mt-1">Flip card</p>
+					<div class="bg-[#2E1B4E] rounded-lg p-3">
+						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#4A2D75] font-mono">SPACE</span>
+						<p class="text-[#A78BBE] mt-1">Flip card</p>
 					</div>
-					<div class="bg-slate-800 rounded-lg p-3">
-						<span class="bg-slate-700 px-2 py-0.5 rounded text-xs border border-slate-600 font-mono">&larr; &rarr;</span>
-						<p class="text-slate-400 mt-1">Navigate</p>
+					<div class="bg-[#2E1B4E] rounded-lg p-3">
+						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#4A2D75] font-mono">&larr; &rarr;</span>
+						<p class="text-[#A78BBE] mt-1">Navigate</p>
 					</div>
-					<div class="bg-slate-800 rounded-lg p-3">
-						<span class="bg-slate-700 px-2 py-0.5 rounded text-xs border border-slate-600 font-mono">S</span>
-						<p class="text-slate-400 mt-1">Speak word</p>
+					<div class="bg-[#2E1B4E] rounded-lg p-3">
+						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#4A2D75] font-mono">S</span>
+						<p class="text-[#A78BBE] mt-1">Speak word</p>
 					</div>
-					<div class="bg-slate-800 rounded-lg p-3">
-						<span class="bg-slate-700 px-2 py-0.5 rounded text-xs border border-slate-600 font-mono">M</span>
-						<p class="text-slate-400 mt-1">Mark mastered</p>
+					<div class="bg-[#2E1B4E] rounded-lg p-3">
+						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#4A2D75] font-mono">M</span>
+						<p class="text-[#A78BBE] mt-1">Mark mastered</p>
 					</div>
 				</div>
-				<button onclick="dismissOnboarding()" class="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg">
-					Start Learning
+				<p id="onboardingSaying" class="text-[#FF2D9B] text-sm italic mb-4"></p>
+				<button onclick="dismissOnboarding()" class="w-full bg-[#E4007C] hover:bg-[#FF2D9B] text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg">
+					Tear Open & Start
 				</button>
 			</div>
 		</div>
 
 		<!-- Header -->
-		<header class="bg-gradient-to-r from-slate-900 via-slate-900 to-slate-800 border-b border-slate-800 p-4 shadow-lg z-20">
+		<header class="bg-gradient-to-r from-[#1A0A2E] via-[#231340] to-[#2E1B4E] border-b border-[#3A2060] p-4 shadow-lg z-20">
 			<div class="max-w-7xl mx-auto w-full flex justify-between items-center">
 				<div class="flex items-center gap-3">
 					<!-- Hamburger (mobile) -->
 					<button
 						id="drawerToggle"
-						class="md:hidden p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
+						class="md:hidden p-2 rounded-lg text-[#A78BBE] hover:text-[#EDE5F4] hover:bg-[#2E1B4E] transition-colors"
 						onclick="toggleDrawer()"
 						aria-label="Open navigation menu"
 						aria-expanded="false"
@@ -213,32 +214,40 @@
 						</svg>
 					</button>
 					<div
-						class="bg-orange-500 w-10 h-10 rounded flex items-center justify-center text-xl shadow-lg shadow-orange-900/50"
+						class="bg-[#2D1441] w-10 h-10 rounded flex items-center justify-center shadow-lg shadow-pink-900/50"
 					>
-						🐾
+						<svg viewBox="0 0 40 48" fill="none" class="w-7 h-7">
+							<rect x="4" y="8" width="32" height="36" rx="4" fill="#E4007C"/>
+							<path d="M4 12 Q8 6 12 10 Q16 4 20 10 Q24 4 28 10 Q32 6 36 12" fill="#FF2D9B"/>
+							<circle cx="20" cy="28" r="4" fill="#2D1441" opacity="0.6"/>
+							<circle cx="14" cy="22" r="2" fill="#2D1441" opacity="0.6"/>
+							<circle cx="20" cy="19" r="2" fill="#2D1441" opacity="0.6"/>
+							<circle cx="26" cy="22" r="2" fill="#2D1441" opacity="0.6"/>
+							<rect x="10" y="36" width="20" height="2" rx="1" fill="#2D1441" opacity="0.3"/>
+						</svg>
 					</div>
 					<div>
 						<h1
-							class="font-black text-xl tracking-tight text-slate-100 uppercase"
+							class="font-black text-xl tracking-tight text-[#F3E8FF] uppercase"
 						>
 							Salsa
 						</h1>
-						<p class="text-xs text-slate-400 font-mono">
-							Aussie in Training · 100 Gothic Commands
+						<p class="text-xs text-[#A78BBE] font-mono">
+							Aussie in Training · 100 Saucy Commands
 						</p>
 					</div>
 				</div>
-				<div class="flex gap-4 text-sm font-medium text-slate-400">
+				<div class="flex gap-4 text-sm font-medium text-[#A78BBE]">
 					<div class="hidden md:flex items-center gap-2">
-						<span class="bg-slate-800 px-2 py-1 rounded text-xs border border-slate-700">SPACE</span>
+						<span class="bg-[#2E1B4E] px-2 py-1 rounded text-xs border border-[#4A2D75]">SPACE</span>
 						Flip
 					</div>
 					<div class="hidden md:flex items-center gap-2">
-						<span class="bg-slate-800 px-2 py-1 rounded text-xs border border-slate-700">S</span>
+						<span class="bg-[#2E1B4E] px-2 py-1 rounded text-xs border border-[#4A2D75]">S</span>
 						Speak
 					</div>
 					<div class="hidden md:flex items-center gap-2">
-						<span class="bg-slate-800 px-2 py-1 rounded text-xs border border-slate-700">&rarr;</span>
+						<span class="bg-[#2E1B4E] px-2 py-1 rounded text-xs border border-[#4A2D75]">&rarr;</span>
 						Next
 					</div>
 				</div>
@@ -259,16 +268,16 @@
 			<!-- Sidebar / Drawer -->
 			<aside
 				id="sidebar"
-				class="fixed inset-y-0 left-0 z-40 w-80 flex flex-col bg-slate-900/95 backdrop-blur-sm border-r border-slate-800 transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:inset-auto md:z-0 md:translate-x-0 md:bg-slate-900/50 md:backdrop-blur-none"
+				class="fixed inset-y-0 left-0 z-40 w-80 flex flex-col bg-[#231340]/95 backdrop-blur-sm border-r border-[#3A2060] transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:inset-auto md:z-0 md:translate-x-0 md:bg-[#231340]/50 md:backdrop-blur-none"
 			>
-				<div class="p-4 border-b border-slate-800">
+				<div class="p-4 border-b border-[#3A2060]">
 					<!-- Drawer header (mobile) -->
 					<div class="flex items-center gap-2 mb-3 md:hidden">
-						<div class="bg-orange-500 w-8 h-8 rounded flex items-center justify-center text-sm">🐾</div>
-						<span class="font-bold text-slate-200">Salsa</span>
+						<div class="bg-[#E4007C] w-8 h-8 rounded flex items-center justify-center text-sm">🐾</div>
+						<span class="font-bold text-[#EDE5F4]">Salsa</span>
 						<button
 							onclick="closeDrawer()"
-							class="ml-auto p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
+							class="ml-auto p-1.5 rounded-lg text-[#A78BBE] hover:text-[#EDE5F4] hover:bg-[#2E1B4E] transition-colors"
 							aria-label="Close navigation menu"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -280,7 +289,7 @@
 						type="text"
 						id="searchInput"
 						placeholder="Search commands..."
-						class="w-full bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 placeholder-slate-600 transition-colors"
+						class="w-full bg-[#2E1B4E] border border-[#4A2D75] text-[#EDE5F4] text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-[#E4007C] focus:ring-1 focus:ring-[#E4007C] placeholder-[#6B4D8A] transition-colors"
 						aria-label="Search commands"
 					/>
 				</div>
@@ -290,34 +299,34 @@
 			</aside>
 
 			<!-- Main Area -->
-			<section class="flex-1 flex flex-col relative bg-slate-950">
+			<section class="flex-1 flex flex-col relative bg-[#150826]">
 				<!-- Progress Bar -->
-				<div class="h-1.5 bg-slate-900 w-full">
+				<div class="h-1.5 bg-[#231340] w-full">
 					<div
 						id="progressBar"
-						class="h-full bg-orange-500 transition-all duration-300"
+						class="h-full bg-[#E4007C] transition-all duration-300"
 						style="width: 0%"
 					></div>
 				</div>
 
 				<!-- Stats Bar -->
-				<div class="flex items-center justify-center gap-4 md:gap-6 py-2 bg-slate-900/50 border-b border-slate-800 text-xs text-slate-400 font-mono">
-					<span><span id="seenCount" class="text-orange-400 font-bold">0</span>/100 Seen</span>
-					<span class="text-slate-700">|</span>
-					<span><span id="masteredCount" class="text-green-400 font-bold">0</span> Mastered</span>
-					<span class="text-slate-700">|</span>
-					<span><span id="streakCount" class="text-orange-400 font-bold">0</span> day streak</span>
+				<div class="flex items-center justify-center gap-4 md:gap-6 py-2 bg-[#231340]/50 border-b border-[#3A2060] text-xs text-[#A78BBE] font-mono">
+					<span><span id="seenCount" class="text-[#FF2D9B] font-bold">0</span>/100 Seen</span>
+					<span class="text-[#3D2563]">|</span>
+					<span><span id="masteredCount" class="text-[#00B2A9] font-bold">0</span> Mastered</span>
+					<span class="text-[#3D2563]">|</span>
+					<span><span id="streakCount" class="text-[#FF2D9B] font-bold">0</span> day streak</span>
 				</div>
 
 				<!-- Filter Chips -->
-				<div class="flex gap-2 overflow-x-auto px-4 py-2.5 bg-slate-950/50 border-b border-slate-800/50 no-scrollbar">
-					<button class="chip chip-active" data-cat="All" onclick="filterByCategory('All')">All</button>
-					<button class="chip" data-cat="Obedience" onclick="filterByCategory('Obedience')">🎓 Obedience</button>
-					<button class="chip" data-cat="Tactical" onclick="filterByCategory('Tactical')">⚔️ Tactical</button>
-					<button class="chip" data-cat="Movement" onclick="filterByCategory('Movement')">🏃 Movement</button>
-					<button class="chip" data-cat="Search" onclick="filterByCategory('Search')">🔍 Search</button>
-					<button class="chip" data-cat="Utility" onclick="filterByCategory('Utility')">🔧 Utility</button>
-					<button class="chip" data-cat="Environmental" onclick="filterByCategory('Environmental')">🌍 Environmental</button>
+				<div class="flex gap-2 overflow-x-auto px-4 py-2.5 bg-[#150826]/50 border-b border-[#3A2060]/50 no-scrollbar">
+					<button class="chip chip-active" data-cat="All" onclick="filterByCategory('All')">🌶️ All Sauces</button>
+					<button class="chip" data-cat="Obedience" onclick="filterByCategory('Obedience')">🟢 Obedience (Mild)</button>
+					<button class="chip" data-cat="Tactical" onclick="filterByCategory('Tactical')">🔴 Tactical (Diablo)</button>
+					<button class="chip" data-cat="Movement" onclick="filterByCategory('Movement')">💚 Movement (Verde)</button>
+					<button class="chip" data-cat="Search" onclick="filterByCategory('Search')">🟡 Search (Hot)</button>
+					<button class="chip" data-cat="Utility" onclick="filterByCategory('Utility')">🟣 Utility (Fire)</button>
+					<button class="chip" data-cat="Environmental" onclick="filterByCategory('Environmental')">🌅 Environmental (Breakfast)</button>
 				</div>
 
 				<div
@@ -328,7 +337,7 @@
 					<div
 						class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none"
 					>
-						<span class="text-[20rem] font-black text-slate-800 rotate-12">SALSA</span>
+						<span class="text-[20rem] font-black text-[#2E1B4E] rotate-12">SALSA</span>
 					</div>
 
 					<!-- Card Container (slide animation target) -->
@@ -343,67 +352,80 @@
 						>
 							<div
 								id="cardInner"
-								class="relative w-full h-full text-center transform-style-3d shadow-2xl rounded-2xl border border-slate-800 bg-slate-900"
+								class="relative w-full h-full text-center transform-style-3d shadow-2xl rounded-2xl border border-[#3A2060] bg-[#231340]"
 							>
 								<!-- FRONT (English) -->
 								<div
-									class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-8 rounded-2xl bg-slate-900 border-2 border-slate-800 group-hover:border-slate-700 transition-colors"
+									class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-8 rounded-2xl bg-[#231340] border-2 border-[#3A2060] group-hover:border-[#6B2FA0] transition-colors"
 								>
 									<!-- Position Badge -->
 									<span
 										id="cardPosition"
-										class="absolute top-6 left-6 text-xs font-mono text-slate-600"
+										class="absolute top-6 left-6 text-xs font-mono text-[#6B4D8A]"
 									>#1</span>
 
 									<span
 										id="cardCategory"
-										class="absolute top-6 text-xs font-bold tracking-widest uppercase text-orange-500 bg-orange-900/20 px-3 py-1 rounded-full border border-orange-900/30"
+										class="absolute top-6 text-xs font-bold tracking-widest uppercase text-[#E4007C] bg-pink-900/20 px-3 py-1 rounded-full border border-pink-900/30"
 									>Category</span>
 									<span
 										id="cardNote"
-										class="absolute top-16 text-xs text-slate-500 font-mono"
+										class="absolute top-16 text-xs text-[#8B6AAE] font-mono"
 									></span>
 
 									<h2
-										class="text-sm text-slate-400 uppercase tracking-widest mb-4 font-bold"
+										class="text-sm text-[#A78BBE] uppercase tracking-widest mb-4 font-bold"
 									>
 										Command
 									</h2>
 									<p
 										id="cardFrontText"
-										class="text-5xl md:text-6xl font-black text-slate-100"
+										class="text-5xl md:text-6xl font-black text-[#F3E8FF]"
 									>
 										Sit
 									</p>
-									<p class="mt-8 text-slate-500 text-sm animate-pulse">
+									<p id="sauceSaying" class="mt-6 text-[#FF2D9B] text-sm italic font-medium">"Will you teach me to sit?"</p>
+									<p class="mt-2 text-[#8B6AAE] text-xs animate-pulse">
 										Click or Space to Flip
 									</p>
 								</div>
 
 								<!-- BACK (Gothic) -->
 								<div
-									class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-8 rounded-2xl bg-slate-800 border-2 border-orange-500 shadow-[0_0_30px_rgba(249,115,22,0.1)]"
+									class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-8 rounded-2xl bg-[#2E1B4E] border-2 border-[#E4007C] shadow-[0_0_30px_rgba(228,0,124,0.15)]"
 								>
-									<span class="absolute top-6 text-xs font-mono text-slate-400"
-										>GOTHIC COMMAND</span
+									<!-- Torn top edge -->
+									<div class="absolute top-0 left-0 right-0 overflow-hidden" style="height: 12px;">
+										<svg viewBox="0 0 400 12" preserveAspectRatio="none" class="w-full h-full">
+											<path d="M0 12 L10 2 L20 10 L30 0 L40 8 L50 2 L60 12 L70 4 L80 10 L90 2 L100 12 L110 4 L120 8 L130 0 L140 10 L150 2 L160 12 L170 4 L180 8 L190 0 L200 10 L210 2 L220 12 L230 4 L240 8 L250 0 L260 10 L270 2 L280 12 L290 4 L300 8 L310 0 L320 10 L330 2 L340 12 L350 4 L360 8 L370 0 L380 10 L390 2 L400 12 Z" fill="#3D2563"/>
+										</svg>
+									</div>
+									<!-- Sauce drip -->
+									<div class="absolute bottom-0 right-8 opacity-20 pointer-events-none">
+										<svg viewBox="0 0 20 40" class="w-5 h-10" fill="#E4007C">
+											<path d="M10 0 Q12 15 14 20 Q16 28 10 35 Q4 28 6 20 Q8 15 10 0 Z"/>
+										</svg>
+									</div>
+									<span class="absolute top-6 text-xs font-mono text-[#A78BBE]"
+										>SAUCY COMMAND</span
 									>
 
 									<!-- Main Word -->
 									<p
 										id="cardBackWord"
-										class="text-5xl md:text-6xl font-black text-orange-400 mb-2"
+										class="text-5xl md:text-6xl font-black text-[#FF2D9B] mb-2"
 									>
 										Gasit
 									</p>
 
 									<!-- Phonetic -->
 									<div
-										class="flex items-center gap-3 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-700/50 mb-4"
+										class="flex items-center gap-3 bg-[#231340]/50 px-4 py-2 rounded-lg border border-[#4A2D75]/50 mb-4"
 									>
-										<span class="text-slate-400 text-sm">Pronunciation:</span>
+										<span class="text-[#A78BBE] text-sm">Pronunciation:</span>
 										<span
 											id="cardBackPron"
-											class="font-mono text-amber-200 text-lg tracking-wide"
+											class="font-mono text-[#FFCC00] text-lg tracking-wide"
 											>/ gah-sit /</span
 										>
 									</div>
@@ -415,7 +437,7 @@
 											id="speedControl"
 											onclick="event.stopPropagation()"
 											onchange="event.stopPropagation()"
-											class="bg-slate-700 text-slate-300 text-xs rounded-lg px-2 py-2 border border-slate-600 focus:outline-none focus:border-orange-500 cursor-pointer"
+											class="bg-[#3D2563] text-[#C4B5D5] text-xs rounded-lg px-2 py-2 border border-[#4A2D75] focus:outline-none focus:border-[#E4007C] cursor-pointer"
 											aria-label="Speech speed"
 										>
 											<option value="0.6">Slow</option>
@@ -427,7 +449,7 @@
 										<button
 											id="speakBtn"
 											onclick="event.stopPropagation(); speakWord()"
-											class="btn-icon flex items-center gap-3 bg-slate-100 text-slate-900 px-6 py-3 rounded-full font-bold hover:bg-white hover:scale-105 shadow-lg shadow-black/50"
+											class="btn-icon flex items-center gap-3 bg-[#F3E8FF] text-[#231340] px-6 py-3 rounded-full font-bold hover:bg-white hover:scale-105 shadow-lg shadow-black/50"
 											aria-label="Play audio pronunciation"
 										>
 											<span id="speakIcon">
@@ -460,14 +482,14 @@
 									<button
 										id="masterBtn"
 										onclick="event.stopPropagation(); toggleMastered(filteredData[currentIndex].id)"
-										class="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-600 text-slate-400 text-sm font-medium hover:bg-slate-700 transition-colors"
+										class="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#4A2D75] text-[#A78BBE] text-sm font-medium hover:bg-[#3D2563] transition-colors"
 										aria-label="Mark card as mastered"
 									>
 										<span id="masterIcon">☐</span>
 										<span id="masterLabel">Mark Mastered</span>
 									</button>
 
-									<p class="absolute bottom-6 text-xs text-slate-400 font-mono">
+									<p class="absolute bottom-6 text-xs text-[#A78BBE] font-mono">
 										Press 'S' to Speak &middot; 'M' to Master
 									</p>
 								</div>
@@ -477,11 +499,11 @@
 				</div>
 
 				<!-- Controls -->
-				<div class="bg-slate-900 border-t border-slate-800 p-6">
+				<div class="bg-[#231340] border-t border-[#3A2060] p-6">
 					<div class="max-w-xl mx-auto flex items-center justify-between gap-4">
 						<button
 							onclick="prevCard()"
-							class="p-4 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors border border-slate-700 shadow-lg active:scale-95"
+							class="p-4 rounded-xl bg-[#2E1B4E] text-[#C4B5D5] hover:bg-[#3D2563] hover:text-white transition-colors border border-[#4A2D75] shadow-lg active:scale-95"
 							aria-label="Previous card"
 							role="button"
 						>
@@ -504,7 +526,7 @@
 						<div class="flex flex-col items-center">
 							<span
 								id="counter"
-								class="font-mono text-orange-400 font-bold text-lg"
+								class="font-mono text-[#FF2D9B] font-bold text-lg"
 								>1 / 100</span
 							>
 							<div class="flex items-center gap-2 mt-2">
@@ -516,9 +538,9 @@
 										checked
 									/>
 									<div
-										class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-orange-500"
+										class="w-9 h-5 bg-[#3D2563] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#E4007C]"
 									></div>
-									<span class="ml-2 text-xs font-medium text-slate-400"
+									<span class="ml-2 text-xs font-medium text-[#A78BBE]"
 										>Auto-Audio</span
 									>
 								</label>
@@ -527,7 +549,7 @@
 
 						<button
 							onclick="nextCard()"
-							class="p-4 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors border border-slate-700 shadow-lg active:scale-95"
+							class="p-4 rounded-xl bg-[#2E1B4E] text-[#C4B5D5] hover:bg-[#3D2563] hover:text-white transition-colors border border-[#4A2D75] shadow-lg active:scale-95"
 							aria-label="Next card"
 							role="button"
 						>
@@ -687,22 +709,46 @@
 			// Pinned "Learning / In Progress" command IDs
 			const learningIds = [1, 5, 6, 15, 14, 13, 24] // Sit, Heel, Come, Place, Free(Release), Off, Hold
 			const emojiMap = {
-				Obedience: '🎓', Tactical: '⚔️', Movement: '🏃',
-				Search: '🔍', Utility: '🔧', Environmental: '🌍',
+				Obedience: '🟢', Tactical: '🔴', Movement: '💚',
+				Search: '🟡', Utility: '🟣', Environmental: '🌅',
 			}
 			const colorMap = {
-				Obedience: 'text-blue-500 bg-blue-900/20 border-blue-900/30',
-				Tactical: 'text-red-500 bg-red-900/20 border-red-900/30',
-				Movement: 'text-green-500 bg-green-900/20 border-green-900/30',
-				Search: 'text-yellow-500 bg-yellow-900/20 border-yellow-900/30',
-				Utility: 'text-purple-500 bg-purple-900/20 border-purple-900/30',
-				Environmental: 'text-slate-400 bg-slate-800 border-slate-700',
+				Obedience: 'text-[#00B2A9] bg-teal-900/20 border-teal-900/30',
+				Tactical: 'text-[#E4007C] bg-pink-900/20 border-pink-900/30',
+				Movement: 'text-[#7FFF00] bg-green-900/20 border-green-900/30',
+				Search: 'text-[#FFCC00] bg-yellow-900/20 border-yellow-900/30',
+				Utility: 'text-[#A855F7] bg-purple-900/20 border-purple-900/30',
+				Environmental: 'text-[#A78BBE] bg-[#2E1B4E] border-[#3D2563]',
 			}
 			const progressColorMap = {
-				Obedience: 'bg-blue-500', Tactical: 'bg-red-500',
-				Movement: 'bg-green-500', Search: 'bg-yellow-500',
-				Utility: 'bg-purple-500', Environmental: 'bg-slate-500',
+				Obedience: 'bg-teal-500', Tactical: 'bg-pink-600',
+				Movement: 'bg-green-500', Search: 'bg-yellow-400',
+				Utility: 'bg-purple-500', Environmental: 'bg-[#6B4D8A]',
 			}
+
+			const salsaSayings = [
+				"Will you teach me to sit?",
+				"I knew you were a good trainer.",
+				"You had me at 'good boy.'",
+				"Ah, we meet again.",
+				"Careful, this command is hot.",
+				"Pick me! Pick me!",
+				"Paws and reflect.",
+				"If found, return to Salsa.",
+				"Warning: may cause tail wagging.",
+				"Not all heroes wear leashes.",
+				"Is it too early to say I love treats?",
+				"This packet believes in you.",
+				"You + Training = Unstoppable",
+				"Tell me more about your day.",
+				"I was born for this.",
+				"At this point, just give me a treat.",
+				"Unleash your potential.",
+				"You're doing amazing, sweetie.",
+				"I'm not just a packet, I'm an experience.",
+				"This is the treat you've been waiting for.",
+			]
+			let sayingIndex = Math.floor(Math.random() * salsaSayings.length)
 
 			// ============================================================
 			// STATE
@@ -825,6 +871,7 @@
 				// Show onboarding if first visit
 				if (!store.onboarded) {
 					document.getElementById('onboarding').classList.remove('hidden')
+					document.getElementById('onboardingSaying').textContent = `"${salsaSayings[Math.floor(Math.random() * salsaSayings.length)]}"`
 				}
 
 				renderList()
@@ -877,6 +924,13 @@
 				backPron.textContent = `/ ${item.pron} /`
 				cardNote.textContent = item.note || ''
 
+				// Sauce saying
+				const sayingEl = document.getElementById('sauceSaying')
+				if (sayingEl) {
+					sayingEl.textContent = `"${salsaSayings[sayingIndex % salsaSayings.length]}"`
+					sayingIndex++
+				}
+
 				// Position badge
 				cardPosition.textContent = `#${item.id}`
 
@@ -886,7 +940,7 @@
 				categoryEl.className = `absolute top-6 text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full border ${colorMap[item.type] || colorMap['Environmental']}`
 
 				// Progress bar with category color
-				progressBar.className = `h-full transition-all duration-300 ${progressColorMap[item.type] || 'bg-orange-500'}`
+				progressBar.className = `h-full transition-all duration-300 ${progressColorMap[item.type] || 'bg-[#E4007C]'}`
 				progressBar.style.width = `${((currentIndex + 1) / filteredData.length) * 100}%`
 
 				// Counter
@@ -912,7 +966,7 @@
 
 				// Highlight in sidebar
 				document.querySelectorAll('.list-item').forEach(el => {
-					el.classList.remove('bg-slate-700', 'border-orange-500', 'bg-orange-900/30', 'border-orange-400')
+					el.classList.remove('bg-[#3D2563]', 'border-[#E4007C]', 'bg-pink-900/30', 'border-[#FF2D9B]')
 				})
 
 				const catName = item.type
@@ -923,13 +977,13 @@
 				setTimeout(() => {
 					const listItem = document.getElementById(`list-item-${item.id}`)
 					if (listItem) {
-						listItem.classList.add('bg-slate-700', 'border-orange-500')
+						listItem.classList.add('bg-[#3D2563]', 'border-[#E4007C]')
 						listItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
 					}
 					// Also highlight in learning section
 					const learnItem = document.getElementById(`list-item-learn-${item.id}`)
 					if (learnItem) {
-						learnItem.classList.add('bg-orange-900/30', 'border-orange-400')
+						learnItem.classList.add('bg-pink-900/30', 'border-[#FF2D9B]')
 					}
 				}, 50)
 			}
@@ -1113,14 +1167,14 @@
 				const speakIcon = document.getElementById('speakIcon')
 				const soundWave = document.getElementById('soundWave')
 
-				btn.classList.add('bg-orange-400', 'text-white')
-				btn.classList.remove('bg-slate-100', 'text-slate-900')
+				btn.classList.add('bg-[#E4007C]', 'text-white')
+				btn.classList.remove('bg-[#F3E8FF]', 'text-[#231340]')
 				speakIcon.classList.add('hidden')
 				soundWave.classList.remove('hidden')
 
 				utterThis.onend = function () {
-					btn.classList.remove('bg-orange-400', 'text-white')
-					btn.classList.add('bg-slate-100', 'text-slate-900')
+					btn.classList.remove('bg-[#E4007C]', 'text-white')
+					btn.classList.add('bg-[#F3E8FF]', 'text-[#231340]')
 					speakIcon.classList.remove('hidden')
 					soundWave.classList.add('hidden')
 				}
@@ -1146,13 +1200,13 @@
 				if (mastered) {
 					masterIcon.textContent = '✓'
 					masterLabel.textContent = 'Mastered'
-					masterBtn.classList.add('border-green-600', 'text-green-400')
-					masterBtn.classList.remove('border-slate-600', 'text-slate-400')
+					masterBtn.classList.add('border-[#00897B]', 'text-[#00B2A9]')
+					masterBtn.classList.remove('border-[#4A2D75]', 'text-[#A78BBE]')
 				} else {
 					masterIcon.textContent = '☐'
 					masterLabel.textContent = 'Mark Mastered'
-					masterBtn.classList.remove('border-green-600', 'text-green-400')
-					masterBtn.classList.add('border-slate-600', 'text-slate-400')
+					masterBtn.classList.remove('border-[#00897B]', 'text-[#00B2A9]')
+					masterBtn.classList.add('border-[#4A2D75]', 'text-[#A78BBE]')
 				}
 			}
 
@@ -1161,11 +1215,11 @@
 			// ============================================================
 			function renderListItem(item, container) {
 				const mastered = isMastered(item.id)
-				const masteredMark = mastered ? '<span class="text-green-400 text-xs mr-1">✓</span>' : ''
+				const masteredMark = mastered ? '<span class="text-[#00B2A9] text-xs mr-1">✓</span>' : ''
 
 				const div = document.createElement('div')
 				div.id = `list-item-${item.id}`
-				div.className = 'list-item p-2 rounded-lg border-l-4 border-transparent hover:bg-slate-800 cursor-pointer transition-all flex justify-between items-center group'
+				div.className = 'list-item p-2 rounded-lg border-l-4 border-transparent hover:bg-[#2E1B4E] cursor-pointer transition-all flex justify-between items-center group'
 				div.setAttribute('role', 'button')
 				div.setAttribute('tabindex', '0')
 				div.setAttribute('aria-label', `${item.eng} - ${item.goth}`)
@@ -1173,10 +1227,10 @@
 				div.onkeydown = (e) => { if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); jumpTo(item.id) } }
 				div.innerHTML = `
 					<div class="pl-1">
-						<div class="font-bold text-slate-200 text-sm flex items-center">${masteredMark}${item.goth}</div>
-						<div class="text-xs text-slate-400">${item.eng}</div>
+						<div class="font-bold text-[#EDE5F4] text-sm flex items-center">${masteredMark}${item.goth}</div>
+						<div class="text-xs text-[#A78BBE]">${item.eng}</div>
 					</div>
-					<button onclick="event.stopPropagation(); jumpTo(${item.id}); setTimeout(()=>speakWord(), 100);" class="opacity-0 group-hover:opacity-100 p-1 text-orange-400 hover:text-orange-300 transition-opacity" aria-label="Play ${item.goth}" tabindex="0">
+					<button onclick="event.stopPropagation(); jumpTo(${item.id}); setTimeout(()=>speakWord(), 100);" class="opacity-0 group-hover:opacity-100 p-1 text-[#FF2D9B] hover:text-[#FF69B4] transition-opacity" aria-label="Play ${item.goth}" tabindex="0">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
 						</svg>
@@ -1202,10 +1256,10 @@
 
 				if (learningItems.length > 0) {
 					const learnWrapper = document.createElement('div')
-					learnWrapper.className = 'mb-3 pb-2 border-b border-slate-800'
+					learnWrapper.className = 'mb-3 pb-2 border-b border-[#3A2060]'
 
 					const learnHeader = document.createElement('div')
-					learnHeader.className = 'flex items-center gap-1.5 text-xs font-bold uppercase px-2 py-1.5 text-orange-400'
+					learnHeader.className = 'flex items-center gap-1.5 text-xs font-bold uppercase px-2 py-1.5 text-[#FF2D9B]'
 					learnHeader.innerHTML = '📖 Learning / In Progress'
 					learnWrapper.appendChild(learnHeader)
 
@@ -1214,12 +1268,12 @@
 
 					learningItems.forEach(item => {
 						const mastered = isMastered(item.id)
-						const masteredMark = mastered ? '<span class="text-green-400 text-xs mr-1">✓</span>' : ''
+						const masteredMark = mastered ? '<span class="text-[#00B2A9] text-xs mr-1">✓</span>' : ''
 						const emoji = emojiMap[item.type] || ''
 
 						const div = document.createElement('div')
 						div.id = `list-item-learn-${item.id}`
-						div.className = 'list-item p-2 rounded-lg border-l-4 border-orange-500/60 bg-orange-900/10 hover:bg-orange-900/20 cursor-pointer transition-all flex justify-between items-center group'
+						div.className = 'list-item p-2 rounded-lg border-l-4 border-[#E4007C]/60 bg-pink-900/10 hover:bg-pink-900/20 cursor-pointer transition-all flex justify-between items-center group'
 						div.setAttribute('role', 'button')
 						div.setAttribute('tabindex', '0')
 						div.setAttribute('aria-label', `${item.eng} - ${item.goth}`)
@@ -1227,10 +1281,10 @@
 						div.onkeydown = (e) => { if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); jumpTo(item.id) } }
 						div.innerHTML = `
 							<div class="pl-1">
-								<div class="font-bold text-amber-200 text-sm flex items-center">${masteredMark}${item.goth}</div>
-								<div class="text-xs text-slate-400">${emoji} ${item.eng}</div>
+								<div class="font-bold text-[#FFCC00] text-sm flex items-center">${masteredMark}${item.goth}</div>
+								<div class="text-xs text-[#A78BBE]">${emoji} ${item.eng}</div>
 							</div>
-							<button onclick="event.stopPropagation(); jumpTo(${item.id}); setTimeout(()=>speakWord(), 100);" class="opacity-0 group-hover:opacity-100 p-1 text-orange-400 hover:text-orange-300 transition-opacity" aria-label="Play ${item.goth}" tabindex="0">
+							<button onclick="event.stopPropagation(); jumpTo(${item.id}); setTimeout(()=>speakWord(), 100);" class="opacity-0 group-hover:opacity-100 p-1 text-[#FF2D9B] hover:text-[#FF69B4] transition-opacity" aria-label="Play ${item.goth}" tabindex="0">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
 								</svg>
@@ -1265,14 +1319,14 @@
 						catWrapper.className = 'mb-1'
 
 						const headerBtn = document.createElement('button')
-						headerBtn.className = 'w-full flex items-center justify-between text-xs font-bold text-slate-400 uppercase p-2 hover:bg-slate-800 rounded transition-colors'
+						headerBtn.className = 'w-full flex items-center justify-between text-xs font-bold text-[#A78BBE] uppercase p-2 hover:bg-[#2E1B4E] rounded transition-colors'
 
 						const isOpen = searchTerm.length > 0 || openSections.has(cat)
 						const rotation = isOpen ? 'rotate-180' : ''
 						const emoji = emojiMap[cat] || ''
 
 						headerBtn.innerHTML = `
-							<span class="${isOpen ? 'text-orange-400' : ''}">${emoji} ${cat} <span class="text-slate-600 text-[10px] ml-1">(${visibleItems.length})</span></span>
+							<span class="${isOpen ? 'text-[#FF2D9B]' : ''}">${emoji} ${cat} <span class="text-[#6B4D8A] text-[10px] ml-1">(${visibleItems.length})</span></span>
 							<svg id="arrow-${cat}" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 arrow-icon ${rotation}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 							</svg>

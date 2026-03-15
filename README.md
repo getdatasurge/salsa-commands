@@ -1,12 +1,12 @@
-# Salsa: Gothic Command Trainer
+# Salsa: Saucy Command Trainer
 
-A flashcard app for training Salsa the Aussie Shepherd with 100 Gothic dog commands across 6 categories, with audio pronunciation, search, and keyboard shortcuts.
+A Taco Bell-themed flashcard app for training Salsa the Aussie Shepherd with 100 saucy dog commands across 6 sauce-packet categories, with audio pronunciation, search, and keyboard shortcuts.
 
 **[Live Demo](https://getdatasurge.github.io/salsa-commands/)**
 
 ## Features
 
-- **100 Gothic Commands** across 6 categories: Obedience, Tactical, Movement, Search, Utility, Environmental
+- **100 Saucy Commands** across 6 categories: Obedience (Mild), Tactical (Diablo), Movement (Verde), Search (Hot), Utility (Fire), Environmental (Breakfast)
 - **Audio Pronunciation** via Web Speech API with adjustable speed (slow/normal/fast)
 - **3D Flashcard Flip** with bounce animation
 - **Progress Tracking** — seen cards, mastered cards, and streak counter persisted in localStorage
