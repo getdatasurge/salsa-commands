@@ -35,7 +35,10 @@
 
 			/* Bounce flip timing */
 			#cardInner {
-				transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+				transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+			}
+			#cardInner:hover {
+				box-shadow: 0 0 40px rgba(107, 47, 160, 0.3);
 			}
 
 			/* Card slide animations */
@@ -92,9 +95,9 @@
 			/* Filter Chips */
 			.chip {
 				white-space: nowrap;
-				padding: 0.25rem 0.75rem;
+				padding: 0.375rem 1rem;
 				border-radius: 9999px;
-				font-size: 0.75rem;
+				font-size: 0.8125rem;
 				font-weight: 600;
 				background: #2E1B4E;
 				color: #A78BBE;
@@ -105,11 +108,13 @@
 			}
 			.chip:hover {
 				background: #3D2563;
+				border-color: #6B2FA0;
 			}
 			.chip-active {
-				background: #7B1450;
-				color: #FF2D9B;
-				border-color: #E4007C;
+				background: linear-gradient(135deg, #7B1450, #E4007C);
+				color: #fff;
+				border-color: #FF2D9B;
+				box-shadow: 0 2px 12px rgba(228, 0, 124, 0.3);
 			}
 
 			/* Sound Wave Animation */
@@ -157,6 +162,14 @@
 			.skip-link:focus {
 				top: 0;
 			}
+
+			/* Gradient & Glow Utilities */
+			.gradient-purple { background: linear-gradient(135deg, #2D1441 0%, #1A0A2E 50%, #0D0620 100%); }
+			.gradient-vibrant { background: linear-gradient(135deg, #6B2FA0 0%, #E4007C 100%); }
+			.gradient-header { background: linear-gradient(135deg, #1A0A2E 0%, #3D1266 50%, #6B2FA0 100%); }
+			.gradient-controls { background: linear-gradient(to top, #0D0620 0%, #1A0A2E 100%); }
+			.glow-pink { box-shadow: 0 0 20px rgba(228, 0, 124, 0.3), 0 0 60px rgba(228, 0, 124, 0.1); }
+			.glow-btn { box-shadow: 0 4px 20px rgba(228, 0, 124, 0.4); }
 		</style>
 	</head>
 	<body class="h-screen flex flex-col overflow-hidden">
@@ -168,37 +181,39 @@
 
 		<!-- Onboarding Overlay -->
 		<div id="onboarding" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-			<div class="bg-[#231340] border border-[#4A2D75] rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
-				<div class="text-5xl mb-4">🐾</div>
-				<h2 class="text-2xl font-black text-[#F3E8FF] mb-2">Welcome to Salsa</h2>
+			<div class="bg-gradient-to-br from-[#231340] via-[#2D1441] to-[#1A0A2E] border border-[#6B2FA0] rounded-2xl p-8 max-w-md w-full text-center shadow-[0_0_60px_rgba(228,0,124,0.15)]">
+				<div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#6B2FA0] to-[#E4007C] flex items-center justify-center mx-auto mb-4">
+					<span class="text-3xl">🐾</span>
+				</div>
+				<h2 class="text-3xl font-black bg-gradient-to-r from-[#FF2D9B] to-[#FFCC00] bg-clip-text text-transparent mb-2">Welcome to Salsa</h2>
 				<p class="text-[#A78BBE] mb-6">Train Salsa with 100 saucy commands. Tear open a packet and learn!</p>
 				<div class="grid grid-cols-2 gap-3 mb-6 text-sm">
 					<div class="bg-[#2E1B4E] rounded-lg p-3">
-						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#4A2D75] font-mono">SPACE</span>
+						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#6B2FA0] font-mono">SPACE</span>
 						<p class="text-[#A78BBE] mt-1">Flip card</p>
 					</div>
 					<div class="bg-[#2E1B4E] rounded-lg p-3">
-						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#4A2D75] font-mono">&larr; &rarr;</span>
+						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#6B2FA0] font-mono">&larr; &rarr;</span>
 						<p class="text-[#A78BBE] mt-1">Navigate</p>
 					</div>
 					<div class="bg-[#2E1B4E] rounded-lg p-3">
-						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#4A2D75] font-mono">S</span>
+						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#6B2FA0] font-mono">S</span>
 						<p class="text-[#A78BBE] mt-1">Speak word</p>
 					</div>
 					<div class="bg-[#2E1B4E] rounded-lg p-3">
-						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#4A2D75] font-mono">M</span>
+						<span class="bg-[#3D2563] px-2 py-0.5 rounded text-xs border border-[#6B2FA0] font-mono">M</span>
 						<p class="text-[#A78BBE] mt-1">Mark mastered</p>
 					</div>
 				</div>
 				<p id="onboardingSaying" class="text-[#FF2D9B] text-sm italic mb-4"></p>
-				<button onclick="dismissOnboarding()" class="w-full bg-[#E4007C] hover:bg-[#FF2D9B] text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg">
+				<button onclick="dismissOnboarding()" class="w-full gradient-vibrant glow-btn hover:brightness-110 text-white font-bold text-lg py-3 px-6 rounded-xl transition-all shadow-lg">
 					Tear Open & Start
 				</button>
 			</div>
 		</div>
 
 		<!-- Header -->
-		<header class="bg-gradient-to-r from-[#1A0A2E] via-[#231340] to-[#2E1B4E] border-b border-[#3A2060] p-4 shadow-lg z-20">
+		<header class="gradient-header border-b border-[#6B2FA0]/50 p-4 shadow-lg z-20">
 			<div class="max-w-7xl mx-auto w-full flex justify-between items-center">
 				<div class="flex items-center gap-3">
 					<!-- Hamburger (mobile) -->
@@ -214,7 +229,7 @@
 						</svg>
 					</button>
 					<div
-						class="bg-[#2D1441] w-10 h-10 rounded flex items-center justify-center shadow-lg shadow-pink-900/50"
+						class="bg-[#2D1441] w-11 h-11 rounded flex items-center justify-center glow-btn"
 					>
 						<svg viewBox="0 0 40 48" fill="none" class="w-7 h-7">
 							<rect x="4" y="8" width="32" height="36" rx="4" fill="#E4007C"/>
@@ -228,26 +243,26 @@
 					</div>
 					<div>
 						<h1
-							class="font-black text-xl tracking-tight text-[#F3E8FF] uppercase"
+							class="font-black text-2xl tracking-tight bg-gradient-to-r from-[#FF2D9B] to-[#E4007C] bg-clip-text text-transparent uppercase"
 						>
 							Salsa
 						</h1>
-						<p class="text-xs text-[#A78BBE] font-mono">
+						<p class="text-xs text-[#C4B5D5] font-mono">
 							Aussie in Training · 100 Saucy Commands
 						</p>
 					</div>
 				</div>
 				<div class="flex gap-4 text-sm font-medium text-[#A78BBE]">
 					<div class="hidden md:flex items-center gap-2">
-						<span class="bg-[#2E1B4E] px-2 py-1 rounded text-xs border border-[#4A2D75]">SPACE</span>
+						<span class="bg-[#1A0A2E] px-2 py-1 rounded text-xs border border-[#6B2FA0]">SPACE</span>
 						Flip
 					</div>
 					<div class="hidden md:flex items-center gap-2">
-						<span class="bg-[#2E1B4E] px-2 py-1 rounded text-xs border border-[#4A2D75]">S</span>
+						<span class="bg-[#1A0A2E] px-2 py-1 rounded text-xs border border-[#6B2FA0]">S</span>
 						Speak
 					</div>
 					<div class="hidden md:flex items-center gap-2">
-						<span class="bg-[#2E1B4E] px-2 py-1 rounded text-xs border border-[#4A2D75]">&rarr;</span>
+						<span class="bg-[#1A0A2E] px-2 py-1 rounded text-xs border border-[#6B2FA0]">&rarr;</span>
 						Next
 					</div>
 				</div>
@@ -289,7 +304,7 @@
 						type="text"
 						id="searchInput"
 						placeholder="Search commands..."
-						class="w-full bg-[#2E1B4E] border border-[#4A2D75] text-[#EDE5F4] text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-[#E4007C] focus:ring-1 focus:ring-[#E4007C] placeholder-[#6B4D8A] transition-colors"
+						class="w-full bg-[#2E1B4E] border border-[#4A2D75] text-[#EDE5F4] text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-[#E4007C] focus:ring-1 focus:ring-[#E4007C] placeholder-[#6B4D8A] transition-colors shadow-inner shadow-[#0D0620]"
 						aria-label="Search commands"
 					/>
 				</div>
@@ -310,12 +325,12 @@
 				</div>
 
 				<!-- Stats Bar -->
-				<div class="flex items-center justify-center gap-4 md:gap-6 py-2 bg-[#231340]/50 border-b border-[#3A2060] text-xs text-[#A78BBE] font-mono">
-					<span><span id="seenCount" class="text-[#FF2D9B] font-bold">0</span>/100 Seen</span>
-					<span class="text-[#3D2563]">|</span>
-					<span><span id="masteredCount" class="text-[#00B2A9] font-bold">0</span> Mastered</span>
-					<span class="text-[#3D2563]">|</span>
-					<span><span id="streakCount" class="text-[#FF2D9B] font-bold">0</span> day streak</span>
+				<div class="flex items-center justify-center gap-4 md:gap-6 py-2 bg-[#0D0620]/80 border-b border-[#6B2FA0]/30 text-xs text-[#A78BBE] font-mono">
+					<span><span id="seenCount" class="text-[#FF2D9B] font-bold text-base">0</span>/100 Seen</span>
+					<span class="text-[#6B2FA0]">|</span>
+					<span><span id="masteredCount" class="text-[#00B2A9] font-bold text-base">0</span> Mastered</span>
+					<span class="text-[#6B2FA0]">|</span>
+					<span><span id="streakCount" class="text-[#FF2D9B] font-bold text-base">0</span> day streak</span>
 				</div>
 
 				<!-- Filter Chips -->
@@ -335,9 +350,9 @@
 				>
 					<!-- Background Decoration -->
 					<div
-						class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none"
+						class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none select-none"
 					>
-						<span class="text-[20rem] font-black text-[#2E1B4E] rotate-12">SALSA</span>
+						<span class="text-[20rem] font-black text-[#6B2FA0] rotate-12">SALSA</span>
 					</div>
 
 					<!-- Card Container (slide animation target) -->
@@ -352,11 +367,11 @@
 						>
 							<div
 								id="cardInner"
-								class="relative w-full h-full text-center transform-style-3d shadow-2xl rounded-2xl border border-[#3A2060] bg-[#231340]"
+								class="relative w-full h-full text-center transform-style-3d shadow-2xl rounded-2xl border border-[#3A2060] gradient-purple"
 							>
 								<!-- FRONT (English) -->
 								<div
-									class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-8 rounded-2xl bg-[#231340] border-2 border-[#3A2060] group-hover:border-[#6B2FA0] transition-colors"
+									class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-8 rounded-2xl gradient-purple border-2 border-[#3A2060] group-hover:border-[#6B2FA0] transition-colors"
 								>
 									<!-- Position Badge -->
 									<span
@@ -374,17 +389,17 @@
 									></span>
 
 									<h2
-										class="text-sm text-[#A78BBE] uppercase tracking-widest mb-4 font-bold"
+										class="text-base text-[#A78BBE] uppercase tracking-[0.2em] mb-4 font-bold"
 									>
 										Command
 									</h2>
 									<p
 										id="cardFrontText"
-										class="text-5xl md:text-6xl font-black text-[#F3E8FF]"
+										class="text-5xl md:text-6xl font-black text-[#F3E8FF] drop-shadow-[0_0_20px_rgba(243,232,255,0.15)]"
 									>
 										Sit
 									</p>
-									<p id="sauceSaying" class="mt-6 text-[#FF2D9B] text-sm italic font-medium">"Will you teach me to sit?"</p>
+									<p id="sauceSaying" class="mt-6 text-[#FF2D9B] text-base italic font-medium">"Will you teach me to sit?"</p>
 									<p class="mt-2 text-[#8B6AAE] text-xs animate-pulse">
 										Click or Space to Flip
 									</p>
@@ -392,7 +407,7 @@
 
 								<!-- BACK (Gothic) -->
 								<div
-									class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-8 rounded-2xl bg-[#2E1B4E] border-2 border-[#E4007C] shadow-[0_0_30px_rgba(228,0,124,0.15)]"
+									class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-8 rounded-2xl bg-[#2E1B4E] border-2 border-[#E4007C] glow-pink"
 								>
 									<!-- Torn top edge -->
 									<div class="absolute top-0 left-0 right-0 overflow-hidden" style="height: 12px;">
@@ -406,21 +421,21 @@
 											<path d="M10 0 Q12 15 14 20 Q16 28 10 35 Q4 28 6 20 Q8 15 10 0 Z"/>
 										</svg>
 									</div>
-									<span class="absolute top-6 text-xs font-mono text-[#A78BBE]"
+									<span class="absolute top-6 text-xs font-mono text-[#FF2D9B] tracking-[0.3em]"
 										>SAUCY COMMAND</span
 									>
 
 									<!-- Main Word -->
 									<p
 										id="cardBackWord"
-										class="text-5xl md:text-6xl font-black text-[#FF2D9B] mb-2"
+										class="text-5xl md:text-6xl font-black text-[#FF2D9B] mb-2 drop-shadow-[0_0_25px_rgba(255,45,155,0.3)]"
 									>
 										Gasit
 									</p>
 
 									<!-- Phonetic -->
 									<div
-										class="flex items-center gap-3 bg-[#231340]/50 px-4 py-2 rounded-lg border border-[#4A2D75]/50 mb-4"
+										class="flex items-center gap-3 bg-[#231340]/50 px-4 py-2 rounded-lg border border-[#6B2FA0]/40 mb-4"
 									>
 										<span class="text-[#A78BBE] text-sm">Pronunciation:</span>
 										<span
@@ -449,7 +464,7 @@
 										<button
 											id="speakBtn"
 											onclick="event.stopPropagation(); speakWord()"
-											class="btn-icon flex items-center gap-3 bg-[#F3E8FF] text-[#231340] px-6 py-3 rounded-full font-bold hover:bg-white hover:scale-105 shadow-lg shadow-black/50"
+											class="btn-icon flex items-center gap-3 gradient-vibrant text-white px-6 py-3 rounded-full font-bold hover:scale-110 hover:shadow-[0_4px_30px_rgba(228,0,124,0.5)] glow-btn shadow-lg transition-all"
 											aria-label="Play audio pronunciation"
 										>
 											<span id="speakIcon">
@@ -499,11 +514,11 @@
 				</div>
 
 				<!-- Controls -->
-				<div class="bg-[#231340] border-t border-[#3A2060] p-6">
+				<div class="gradient-controls border-t border-[#6B2FA0]/40 p-6">
 					<div class="max-w-xl mx-auto flex items-center justify-between gap-4">
 						<button
 							onclick="prevCard()"
-							class="p-4 rounded-xl bg-[#2E1B4E] text-[#C4B5D5] hover:bg-[#3D2563] hover:text-white transition-colors border border-[#4A2D75] shadow-lg active:scale-95"
+							class="p-4 rounded-xl bg-[#1A0A2E] text-[#C4B5D5] hover:bg-[#2D1441] hover:border-[#E4007C] hover:text-white hover:shadow-[0_0_15px_rgba(228,0,124,0.2)] transition-all border border-[#6B2FA0] shadow-lg active:scale-95"
 							aria-label="Previous card"
 							role="button"
 						>
@@ -526,7 +541,7 @@
 						<div class="flex flex-col items-center">
 							<span
 								id="counter"
-								class="font-mono text-[#FF2D9B] font-bold text-lg"
+								class="font-mono text-[#FF2D9B] font-bold text-xl"
 								>1 / 100</span
 							>
 							<div class="flex items-center gap-2 mt-2">
@@ -549,7 +564,7 @@
 
 						<button
 							onclick="nextCard()"
-							class="p-4 rounded-xl bg-[#2E1B4E] text-[#C4B5D5] hover:bg-[#3D2563] hover:text-white transition-colors border border-[#4A2D75] shadow-lg active:scale-95"
+							class="p-4 rounded-xl bg-[#1A0A2E] text-[#C4B5D5] hover:bg-[#2D1441] hover:border-[#E4007C] hover:text-white hover:shadow-[0_0_15px_rgba(228,0,124,0.2)] transition-all border border-[#6B2FA0] shadow-lg active:scale-95"
 							aria-label="Next card"
 							role="button"
 						>
@@ -1167,14 +1182,14 @@
 				const speakIcon = document.getElementById('speakIcon')
 				const soundWave = document.getElementById('soundWave')
 
-				btn.classList.add('bg-[#E4007C]', 'text-white')
-				btn.classList.remove('bg-[#F3E8FF]', 'text-[#231340]')
+				btn.classList.remove('gradient-vibrant')
+				btn.classList.add('bg-[#FF2D9B]')
 				speakIcon.classList.add('hidden')
 				soundWave.classList.remove('hidden')
 
 				utterThis.onend = function () {
-					btn.classList.remove('bg-[#E4007C]', 'text-white')
-					btn.classList.add('bg-[#F3E8FF]', 'text-[#231340]')
+					btn.classList.remove('bg-[#FF2D9B]')
+					btn.classList.add('gradient-vibrant')
 					speakIcon.classList.remove('hidden')
 					soundWave.classList.add('hidden')
 				}
@@ -1259,7 +1274,7 @@
 					learnWrapper.className = 'mb-3 pb-2 border-b border-[#3A2060]'
 
 					const learnHeader = document.createElement('div')
-					learnHeader.className = 'flex items-center gap-1.5 text-xs font-bold uppercase px-2 py-1.5 text-[#FF2D9B]'
+					learnHeader.className = 'flex items-center gap-1.5 text-base font-bold uppercase px-2 py-1.5 text-[#FF2D9B]'
 					learnHeader.innerHTML = '📖 Learning / In Progress'
 					learnWrapper.appendChild(learnHeader)
 
@@ -1323,10 +1338,11 @@
 
 						const isOpen = searchTerm.length > 0 || openSections.has(cat)
 						const rotation = isOpen ? 'rotate-180' : ''
+						const accentBar = isOpen ? 'border-l-2 border-[#E4007C] pl-2' : ''
 						const emoji = emojiMap[cat] || ''
 
 						headerBtn.innerHTML = `
-							<span class="${isOpen ? 'text-[#FF2D9B]' : ''}">${emoji} ${cat} <span class="text-[#6B4D8A] text-[10px] ml-1">(${visibleItems.length})</span></span>
+							<span class="${isOpen ? 'text-[#FF2D9B]' : ''} ${accentBar}">${emoji} ${cat} <span class="text-[#6B4D8A] text-[10px] ml-1">(${visibleItems.length})</span></span>
 							<svg id="arrow-${cat}" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 arrow-icon ${rotation}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 							</svg>
