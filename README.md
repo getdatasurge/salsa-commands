@@ -1,6 +1,6 @@
-# Gothic K9: Complete Audio Trainer
+# Salsa: Gothic Command Trainer
 
-A flashcard app for learning 100 Gothic dog training commands across 6 categories, with audio pronunciation, search, and keyboard shortcuts.
+A flashcard app for training Salsa the Aussie Shepherd with 100 Gothic dog commands across 6 categories, with audio pronunciation, search, and keyboard shortcuts.
 
 **[Live Demo](https://getdatasurge.github.io/salsa-commands/)**
 
