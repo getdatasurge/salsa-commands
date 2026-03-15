@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Gothic K9: Complete Audio Trainer</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;900&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			body {
+				font-family: 'Inter', sans-serif;
+				background-color: #1c1917;
+				color: #e7e5e4;
+			}
+			.font-mono {
+				font-family: 'JetBrains Mono', monospace;
+			}
+
+			/* 3D Card Flip */
+			.perspective-1000 {
+				perspective: 1000px;
+			}
+			.transform-style-3d {
+				transform-style: preserve-3d;
+			}
+			.backface-hidden {
+				backface-visibility: hidden;
+			}
+			.rotate-y-180 {
+				transform: rotateY(180deg);
+			}
+
+			/* Bounce flip timing */
+			#cardInner {
+				transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			}
+
+			/* Card slide animations */
+			@keyframes slideOutLeft {
+				from { transform: translateX(0); opacity: 1; }
+				to { transform: translateX(-40px); opacity: 0; }
+			}
+			@keyframes slideInRight {
+				from { transform: translateX(40px); opacity: 0; }
+				to { transform: translateX(0); opacity: 1; }
+			}
+			@keyframes slideOutRight {
+				from { transform: translateX(0); opacity: 1; }
+				to { transform: translateX(40px); opacity: 0; }
+			}
+			@keyframes slideInLeft {
+				from { transform: translateX(-40px); opacity: 0; }
+				to { transform: translateX(0); opacity: 1; }
+			}
+			.slide-next-out { animation: slideOutLeft 0.15s ease forwards; }
+			.slide-next-in { animation: slideInRight 0.15s ease forwards; }
+			.slide-prev-out { animation: slideOutRight 0.15s ease forwards; }
+			.slide-prev-in { animation: slideInLeft 0.15s ease forwards; }
+
+			/* Custom Scrollbar */
+			::-webkit-scrollbar { width: 8px; }
+			::-webkit-scrollbar-track { background: #292524; }
+			::-webkit-scrollbar-thumb { background: #44403c; border-radius: 4px; }
+			::-webkit-scrollbar-thumb:hover { background: #57534e; }
+
+			/* Hide scrollbar for chips */
+			.no-scrollbar::-webkit-scrollbar { display: none; }
+			.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+			.btn-icon {
+				transition: all 0.2s;
+			}
+			.btn-icon:active {
+				transform: scale(0.95);
+			}
+
+			/* Accordion */
+			.accordion-content {
+				transition: max-height 0.3s ease-in-out;
+				overflow: hidden;
+			}
+			.rotate-180 {
+				transform: rotate(180deg);
+			}
+			.arrow-icon {
+				transition: transform 0.3s ease;
+			}
+
+			/* Filter Chips */
+			.chip {
+				white-space: nowrap;
+				padding: 0.25rem 0.75rem;
+				border-radius: 9999px;
+				font-size: 0.75rem;
+				font-weight: 600;
+				background: #292524;
+				color: #a8a29e;
+				border: 1px solid #44403c;
+				cursor: pointer;
+				transition: all 0.2s;
+				flex-shrink: 0;
+			}
+			.chip:hover {
+				background: #44403c;
+			}
+			.chip-active {
+				background: #92400e;
+				color: #fbbf24;
+				border-color: #b45309;
+			}
+
+			/* Sound Wave Animation */
+			@keyframes soundwave1 {
+				0%, 100% { height: 4px; }
+				50% { height: 16px; }
+			}
+			@keyframes soundwave2 {
+				0%, 100% { height: 8px; }
+				50% { height: 12px; }
+			}
+			@keyframes soundwave3 {
+				0%, 100% { height: 6px; }
+				50% { height: 18px; }
+			}
+			.sound-wave {
+				display: flex;
+				align-items: center;
+				gap: 2px;
+				height: 20px;
+			}
+			.sound-bar {
+				width: 3px;
+				border-radius: 2px;
+				background: currentColor;
+			}
+			.sound-bar:nth-child(1) { animation: soundwave1 0.5s ease-in-out infinite; }
+			.sound-bar:nth-child(2) { animation: soundwave2 0.4s ease-in-out infinite 0.1s; }
+			.sound-bar:nth-child(3) { animation: soundwave3 0.5s ease-in-out infinite 0.2s; }
+			.sound-bar:nth-child(4) { animation: soundwave2 0.4s ease-in-out infinite 0.05s; }
+
+			/* Skip to Content */
+			.skip-link {
+				position: absolute;
+				top: -100%;
+				left: 0;
+				z-index: 100;
+				padding: 0.5rem 1rem;
+				background: #d97706;
+				color: #fff;
+				font-weight: 700;
+				text-decoration: none;
+				border-radius: 0 0 0.5rem 0;
+			}
+			.skip-link:focus {
+				top: 0;
+			}
+		</style>
+	</head>
+	<body class="h-screen flex flex-col overflow-hidden">
+		<!-- Skip to Content -->
+		<a href="#main-content" class="skip-link">Skip to content</a>
+
+		<!-- Screen Reader Announcer -->
+		<div id="cardAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+		<!-- Onboarding Overlay -->
+		<div id="onboarding" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+			<div class="bg-stone-900 border border-stone-700 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
+				<div class="text-5xl mb-4">🐺</div>
+				<h2 class="text-2xl font-black text-stone-100 mb-2">Welcome to Gothic K9</h2>
+				<p class="text-stone-400 mb-6">Learn 100 Gothic dog training commands with audio flashcards.</p>
+				<div class="grid grid-cols-2 gap-3 mb-6 text-sm">
+					<div class="bg-stone-800 rounded-lg p-3">
+						<span class="bg-stone-700 px-2 py-0.5 rounded text-xs border border-stone-600 font-mono">SPACE</span>
+						<p class="text-stone-400 mt-1">Flip card</p>
+					</div>
+					<div class="bg-stone-800 rounded-lg p-3">
+						<span class="bg-stone-700 px-2 py-0.5 rounded text-xs border border-stone-600 font-mono">&larr; &rarr;</span>
+						<p class="text-stone-400 mt-1">Navigate</p>
+					</div>
+					<div class="bg-stone-800 rounded-lg p-3">
+						<span class="bg-stone-700 px-2 py-0.5 rounded text-xs border border-stone-600 font-mono">S</span>
+						<p class="text-stone-400 mt-1">Speak word</p>
+					</div>
+					<div class="bg-stone-800 rounded-lg p-3">
+						<span class="bg-stone-700 px-2 py-0.5 rounded text-xs border border-stone-600 font-mono">M</span>
+						<p class="text-stone-400 mt-1">Mark mastered</p>
+					</div>
+				</div>
+				<button onclick="dismissOnboarding()" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg">
+					Start Learning
+				</button>
+			</div>
+		</div>
+
+		<!-- Header -->
+		<header class="bg-gradient-to-r from-stone-900 via-stone-900/95 to-stone-800 border-b border-stone-800 p-4 shadow-lg z-20">
+			<div class="max-w-7xl mx-auto w-full flex justify-between items-center">
+				<div class="flex items-center gap-3">
+					<!-- Hamburger (mobile) -->
+					<button
+						id="drawerToggle"
+						class="md:hidden p-2 rounded-lg text-stone-400 hover:text-stone-200 hover:bg-stone-800 transition-colors"
+						onclick="toggleDrawer()"
+						aria-label="Open navigation menu"
+						aria-expanded="false"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+						</svg>
+					</button>
+					<div
+						class="bg-amber-600 w-10 h-10 rounded flex items-center justify-center text-xl shadow-lg shadow-amber-900/50"
+					>
+						🐺
+					</div>
+					<div>
+						<h1
+							class="font-black text-xl tracking-tight text-stone-100 uppercase"
+						>
+							Gothic K9
+						</h1>
+						<p class="text-xs text-stone-400 font-mono">
+							100-Word Tactical Protocol
+						</p>
+					</div>
+				</div>
+				<div class="flex gap-4 text-sm font-medium text-stone-400">
+					<div class="hidden md:flex items-center gap-2">
+						<span class="bg-stone-800 px-2 py-1 rounded text-xs border border-stone-700">SPACE</span>
+						Flip
+					</div>
+					<div class="hidden md:flex items-center gap-2">
+						<span class="bg-stone-800 px-2 py-1 rounded text-xs border border-stone-700">S</span>
+						Speak
+					</div>
+					<div class="hidden md:flex items-center gap-2">
+						<span class="bg-stone-800 px-2 py-1 rounded text-xs border border-stone-700">&rarr;</span>
+						Next
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<main
+			id="main-content"
+			class="flex-1 flex flex-col md:flex-row max-w-7xl mx-auto w-full overflow-hidden"
+		>
+			<!-- Drawer Overlay -->
+			<div
+				id="drawerOverlay"
+				class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"
+				onclick="closeDrawer()"
+			></div>
+
+			<!-- Sidebar / Drawer -->
+			<aside
+				id="sidebar"
+				class="fixed inset-y-0 left-0 z-40 w-80 flex flex-col bg-stone-900/95 backdrop-blur-sm border-r border-stone-800 transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:inset-auto md:z-0 md:translate-x-0 md:bg-stone-900/50 md:backdrop-blur-none"
+			>
+				<div class="p-4 border-b border-stone-800">
+					<!-- Drawer header (mobile) -->
+					<div class="flex items-center gap-2 mb-3 md:hidden">
+						<div class="bg-amber-600 w-8 h-8 rounded flex items-center justify-center text-sm">🐺</div>
+						<span class="font-bold text-stone-200">Gothic K9</span>
+						<button
+							onclick="closeDrawer()"
+							class="ml-auto p-1.5 rounded-lg text-stone-400 hover:text-stone-200 hover:bg-stone-800 transition-colors"
+							aria-label="Close navigation menu"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+							</svg>
+						</button>
+					</div>
+					<input
+						type="text"
+						id="searchInput"
+						placeholder="Search commands..."
+						class="w-full bg-stone-800 border border-stone-700 text-stone-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600 placeholder-stone-600 transition-colors"
+						aria-label="Search commands"
+					/>
+				</div>
+				<div id="commandList" class="flex-1 overflow-y-auto p-2">
+					<!-- Populated by JS -->
+				</div>
+			</aside>
+
+			<!-- Main Area -->
+			<section class="flex-1 flex flex-col relative bg-stone-950">
+				<!-- Progress Bar -->
+				<div class="h-1.5 bg-stone-900 w-full">
+					<div
+						id="progressBar"
+						class="h-full bg-amber-600 transition-all duration-300"
+						style="width: 0%"
+					></div>
+				</div>
+
+				<!-- Stats Bar -->
+				<div class="flex items-center justify-center gap-4 md:gap-6 py-2 bg-stone-900/50 border-b border-stone-800 text-xs text-stone-400 font-mono">
+					<span><span id="seenCount" class="text-amber-500 font-bold">0</span>/100 Seen</span>
+					<span class="text-stone-700">|</span>
+					<span><span id="masteredCount" class="text-green-400 font-bold">0</span> Mastered</span>
+					<span class="text-stone-700">|</span>
+					<span><span id="streakCount" class="text-orange-400 font-bold">0</span> day streak</span>
+				</div>
+
+				<!-- Filter Chips -->
+				<div class="flex gap-2 overflow-x-auto px-4 py-2.5 bg-stone-950/50 border-b border-stone-800/50 no-scrollbar">
+					<button class="chip chip-active" data-cat="All" onclick="filterByCategory('All')">All</button>
+					<button class="chip" data-cat="Obedience" onclick="filterByCategory('Obedience')">🎓 Obedience</button>
+					<button class="chip" data-cat="Tactical" onclick="filterByCategory('Tactical')">⚔️ Tactical</button>
+					<button class="chip" data-cat="Movement" onclick="filterByCategory('Movement')">🏃 Movement</button>
+					<button class="chip" data-cat="Search" onclick="filterByCategory('Search')">🔍 Search</button>
+					<button class="chip" data-cat="Utility" onclick="filterByCategory('Utility')">🔧 Utility</button>
+					<button class="chip" data-cat="Environmental" onclick="filterByCategory('Environmental')">🌍 Environmental</button>
+				</div>
+
+				<div
+					id="cardArea"
+					class="flex-1 flex items-center justify-center p-6 md:p-12 relative overflow-hidden"
+				>
+					<!-- Background Decoration -->
+					<div
+						class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none"
+					>
+						<span class="text-[20rem] font-black text-stone-800 rotate-12">GOTH</span>
+					</div>
+
+					<!-- Card Container (slide animation target) -->
+					<div id="cardContainer" class="w-full max-w-xl">
+						<!-- Flashcard -->
+						<div
+							class="perspective-1000 w-full h-96 cursor-pointer group"
+							onclick="flipCard()"
+							role="button"
+							tabindex="0"
+							aria-label="Flashcard. Press space to flip."
+						>
+							<div
+								id="cardInner"
+								class="relative w-full h-full text-center transform-style-3d shadow-2xl rounded-2xl border border-stone-800 bg-stone-900"
+							>
+								<!-- FRONT (English) -->
+								<div
+									class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-8 rounded-2xl bg-stone-900 border-2 border-stone-800 group-hover:border-stone-700 transition-colors"
+								>
+									<!-- Position Badge -->
+									<span
+										id="cardPosition"
+										class="absolute top-6 left-6 text-xs font-mono text-stone-600"
+									>#1</span>
+
+									<span
+										id="cardCategory"
+										class="absolute top-6 text-xs font-bold tracking-widest uppercase text-amber-600 bg-amber-900/20 px-3 py-1 rounded-full border border-amber-900/30"
+									>Category</span>
+									<span
+										id="cardNote"
+										class="absolute top-16 text-xs text-stone-500 font-mono"
+									></span>
+
+									<h2
+										class="text-sm text-stone-400 uppercase tracking-widest mb-4 font-bold"
+									>
+										Command
+									</h2>
+									<p
+										id="cardFrontText"
+										class="text-5xl md:text-6xl font-black text-stone-100"
+									>
+										Sit
+									</p>
+									<p class="mt-8 text-stone-500 text-sm animate-pulse">
+										Click or Space to Flip
+									</p>
+								</div>
+
+								<!-- BACK (Gothic) -->
+								<div
+									class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-8 rounded-2xl bg-stone-800 border-2 border-amber-600 shadow-[0_0_30px_rgba(217,119,6,0.1)]"
+								>
+									<span class="absolute top-6 text-xs font-mono text-stone-400"
+										>GOTHIC IMPERATIVE</span
+									>
+
+									<!-- Main Word -->
+									<p
+										id="cardBackWord"
+										class="text-5xl md:text-6xl font-black text-amber-500 mb-2"
+									>
+										Gasit
+									</p>
+
+									<!-- Phonetic -->
+									<div
+										class="flex items-center gap-3 bg-stone-900/50 px-4 py-2 rounded-lg border border-stone-700/50 mb-4"
+									>
+										<span class="text-stone-400 text-sm">Pronunciation:</span>
+										<span
+											id="cardBackPron"
+											class="font-mono text-amber-200 text-lg tracking-wide"
+											>/ gah-sit /</span
+										>
+									</div>
+
+									<!-- Audio Controls Row -->
+									<div class="flex items-center gap-3 mb-4">
+										<!-- Speed Control -->
+										<select
+											id="speedControl"
+											onclick="event.stopPropagation()"
+											onchange="event.stopPropagation()"
+											class="bg-stone-700 text-stone-300 text-xs rounded-lg px-2 py-2 border border-stone-600 focus:outline-none focus:border-amber-600 cursor-pointer"
+											aria-label="Speech speed"
+										>
+											<option value="0.6">Slow</option>
+											<option value="0.8" selected>Normal</option>
+											<option value="1.2">Fast</option>
+										</select>
+
+										<!-- Play Audio Button -->
+										<button
+											id="speakBtn"
+											onclick="event.stopPropagation(); speakWord()"
+											class="btn-icon flex items-center gap-3 bg-stone-100 text-stone-900 px-6 py-3 rounded-full font-bold hover:bg-white hover:scale-105 shadow-lg shadow-black/50"
+											aria-label="Play audio pronunciation"
+										>
+											<span id="speakIcon">
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													class="h-6 w-6"
+													fill="none"
+													viewBox="0 0 24 24"
+													stroke="currentColor"
+												>
+													<path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2"
+														d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+													/>
+												</svg>
+											</span>
+											<span id="soundWave" class="sound-wave hidden">
+												<span class="sound-bar"></span>
+												<span class="sound-bar"></span>
+												<span class="sound-bar"></span>
+												<span class="sound-bar"></span>
+											</span>
+											<span>Play Audio</span>
+										</button>
+									</div>
+
+									<!-- Mark Mastered Button -->
+									<button
+										id="masterBtn"
+										onclick="event.stopPropagation(); toggleMastered(filteredData[currentIndex].id)"
+										class="flex items-center gap-2 px-4 py-2 rounded-lg border border-stone-600 text-stone-400 text-sm font-medium hover:bg-stone-700 transition-colors"
+										aria-label="Mark card as mastered"
+									>
+										<span id="masterIcon">☐</span>
+										<span id="masterLabel">Mark Mastered</span>
+									</button>
+
+									<p class="absolute bottom-6 text-xs text-stone-400 font-mono">
+										Press 'S' to Speak &middot; 'M' to Master
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Controls -->
+				<div class="bg-stone-900 border-t border-stone-800 p-6">
+					<div class="max-w-xl mx-auto flex items-center justify-between gap-4">
+						<button
+							onclick="prevCard()"
+							class="p-4 rounded-xl bg-stone-800 text-stone-300 hover:bg-stone-700 hover:text-white transition-colors border border-stone-700 shadow-lg active:scale-95"
+							aria-label="Previous card"
+							role="button"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M15 19l-7-7 7-7"
+								/>
+							</svg>
+						</button>
+
+						<div class="flex flex-col items-center">
+							<span
+								id="counter"
+								class="font-mono text-amber-500 font-bold text-lg"
+								>1 / 100</span
+							>
+							<div class="flex items-center gap-2 mt-2">
+								<label class="relative inline-flex items-center cursor-pointer">
+									<input
+										type="checkbox"
+										id="autoPlayToggle"
+										class="sr-only peer"
+									/>
+									<div
+										class="w-9 h-5 bg-stone-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-600"
+									></div>
+									<span class="ml-2 text-xs font-medium text-stone-400"
+										>Auto-Audio</span
+									>
+								</label>
+							</div>
+						</div>
+
+						<button
+							onclick="nextCard()"
+							class="p-4 rounded-xl bg-stone-800 text-stone-300 hover:bg-stone-700 hover:text-white transition-colors border border-stone-700 shadow-lg active:scale-95"
+							aria-label="Next card"
+							role="button"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<script>
+			// ============================================================
+			// DATABASE
+			// ============================================================
+			const rawData = [
+				// 1. Obedience (Core)
+				{ type: 'Obedience', eng: 'Sit', goth: 'Gasit', pron: 'gah-sit', tts: 'gah sit', note: 'Root: Gasitan' },
+				{ type: 'Obedience', eng: 'Down', goth: 'Lig', pron: 'lig', tts: 'lig', note: 'Root: Ligan' },
+				{ type: 'Obedience', eng: 'Stand', goth: 'Stand', pron: 'stand', tts: 'stand', note: "Short 'a'" },
+				{ type: 'Obedience', eng: 'Stay', goth: 'Wisa', pron: 'wi-sa', tts: 'wee sah', note: 'Remain' },
+				{ type: 'Obedience', eng: 'Heel', goth: 'Laist', pron: 'layst', tts: 'laced', note: 'Follow track' },
+				{ type: 'Obedience', eng: 'Come', goth: 'Hir', pron: 'heer', tts: 'heer', note: 'Come here' },
+				{ type: 'Obedience', eng: 'No', goth: 'Ne', pron: 'neh', tts: 'neh', note: 'Correction' },
+				{ type: 'Obedience', eng: 'Good', goth: 'Waila', pron: 'way-la', tts: 'way lah', note: 'Marker' },
+				{ type: 'Obedience', eng: 'Bad', goth: 'Ubil', pron: 'oo-bil', tts: 'oo bil', note: 'Correction' },
+				{ type: 'Obedience', eng: 'Quiet', goth: 'Slawan', pron: 'sla-wan', tts: 'slah wan', note: 'Be silent' },
+				{ type: 'Obedience', eng: 'Look', goth: 'Sai', pron: 'sigh', tts: 'sigh', note: 'Focus' },
+				{ type: 'Obedience', eng: 'Wait', goth: 'Beid', pron: 'bide', tts: 'bide', note: 'Wait' },
+				{ type: 'Obedience', eng: 'Off/Leave', goth: 'Af', pron: 'aff', tts: 'aff', note: 'Away' },
+				{ type: 'Obedience', eng: 'Free', goth: 'Letan', pron: 'let-an', tts: 'let an', note: 'Release' },
+				{ type: 'Obedience', eng: 'Place', goth: 'Stad', pron: 'stahd', tts: 'stahd', note: 'Stead/Place' },
+
+				// 2. Tactical (Aggression)
+				{ type: 'Tactical', eng: 'Bite', goth: 'Greip', pron: 'gree-p', tts: 'greep', note: 'Grip/Seize' },
+				{ type: 'Tactical', eng: 'Attack', goth: 'Slah', pron: 'slah', tts: 'slah', note: 'Strike' },
+				{ type: 'Tactical', eng: 'Bark', goth: 'Hrop', pron: 'hrope', tts: 'hrope', note: 'Shout' },
+				{ type: 'Tactical', eng: 'Growl', goth: 'Kruk', pron: 'krook', tts: 'crook', note: 'Warn' },
+				{ type: 'Tactical', eng: 'Guard', goth: 'Ward', pron: 'ward', tts: 'ward', note: 'Protect' },
+				{ type: 'Tactical', eng: 'Watch', goth: 'Wita', pron: 'wi-ta', tts: 'wit ah', note: 'Observe' },
+				{ type: 'Tactical', eng: 'Out/Release', goth: 'Let', pron: 'let', tts: 'let', note: 'Let go' },
+				{ type: 'Tactical', eng: 'Blitz/Fast', goth: 'Snium', pron: 'snyoom', tts: 'snyoom', note: 'Hasten' },
+				{ type: 'Tactical', eng: 'Hold', goth: 'Haba', pron: 'ha-ba', tts: 'hah bah', note: 'Have/Hold' },
+				{ type: 'Tactical', eng: 'Enemy', goth: 'Fijand', pron: 'fee-yand', tts: 'fee yand', note: 'Threat' },
+				{ type: 'Tactical', eng: 'Friend', goth: 'Frijond', pron: 'free-yond', tts: 'free yand', note: 'Friendly' },
+				{ type: 'Tactical', eng: 'Weapon', goth: 'Wepna', pron: 'wep-na', tts: 'wep nah', note: 'Gun/Knife' },
+				{ type: 'Tactical', eng: 'Fight', goth: 'Wigan', pron: 'wig-an', tts: 'wig an', note: 'Engage' },
+				{ type: 'Tactical', eng: 'Kill', goth: 'Dauth', pron: 'dow-th', tts: 'dowth', note: 'Lethal' },
+				{ type: 'Tactical', eng: 'Fearless', goth: 'Bald', pron: 'bald', tts: 'bald', note: 'Bold' },
+
+				// 3. Movement (Agility)
+				{ type: 'Movement', eng: 'Go', goth: 'Gagg', pron: 'gah-ng', tts: 'gahng', note: 'Forward' },
+				{ type: 'Movement', eng: 'Run', goth: 'Rinn', pron: 'rin', tts: 'rin', note: 'Sprint' },
+				{ type: 'Movement', eng: 'Jump', goth: 'Hlaup', pron: 'hlowp', tts: 'hlowp', note: 'Leap' },
+				{ type: 'Movement', eng: 'Up', goth: 'Iup', pron: 'yoop', tts: 'yoop', note: 'Climb up' },
+				{ type: 'Movement', eng: 'Down (Dir)', goth: 'Dalath', pron: 'da-lath', tts: 'dah lath', note: 'Downwards' },
+				{ type: 'Movement', eng: 'Over', goth: 'Ufar', pron: 'oo-far', tts: 'oo far', note: 'Over object' },
+				{ type: 'Movement', eng: 'Under', goth: 'Undar', pron: 'un-dar', tts: 'oon dar', note: 'Under object' },
+				{ type: 'Movement', eng: 'Through', goth: 'Thairh', pron: 'thair-h', tts: 'thairch', note: 'Tunnel/Door' },
+				{ type: 'Movement', eng: 'Left', goth: 'Hleid', pron: 'hlade', tts: 'hlade', note: 'Direction' },
+				{ type: 'Movement', eng: 'Right', goth: 'Taihs', pron: 'tice', tts: 'tice', note: 'Direction' },
+				{ type: 'Movement', eng: 'Front', goth: 'Faura', pron: 'fow-ra', tts: 'fow rah', note: 'Ahead' },
+				{ type: 'Movement', eng: 'Back', goth: 'Aftra', pron: 'af-tra', tts: 'aff tra', note: 'Behind' },
+				{ type: 'Movement', eng: 'In', goth: 'Inn', pron: 'in', tts: 'in', note: 'Enter' },
+				{ type: 'Movement', eng: 'Out', goth: 'Ut', pron: 'oot', tts: 'oot', note: 'Exit' },
+				{ type: 'Movement', eng: 'Climb', goth: 'Steig', pron: 'sty-g', tts: 'sty g', note: 'Scale' },
+				{ type: 'Movement', eng: 'Slow', goth: 'Sain', pron: 'sign', tts: 'sign', note: 'Decelerate' },
+				{ type: 'Movement', eng: 'Fast (Adv)', goth: 'Sprauto', pron: 'sprow-to', tts: 'sprow toe', note: 'Quickly' },
+				{ type: 'Movement', eng: 'Halt', goth: 'Stand', pron: 'stand', tts: 'stand', note: 'Stop moving' },
+				{ type: 'Movement', eng: 'Turn', goth: 'Wand', pron: 'wand', tts: 'wand', note: 'Turn around' },
+				{ type: 'Movement', eng: 'Car', goth: 'Wag', pron: 'wahg', tts: 'wahg', note: 'Vehicle' },
+
+				// 4. Search (Detection)
+				{ type: 'Search', eng: 'Seek', goth: 'Sok', pron: 'sohk', tts: 'soak', note: 'Search area' },
+				{ type: 'Search', eng: 'Find', goth: 'Bigit', pron: 'bi-git', tts: 'bee git', note: 'Locate' },
+				{ type: 'Search', eng: 'Track', goth: 'Spor', pron: 'spore', tts: 'spore', note: 'Follow trail' },
+				{ type: 'Search', eng: 'Sniff', goth: 'Daun', pron: 'down', tts: 'down', note: 'Scent' },
+				{ type: 'Search', eng: 'Fetch', goth: 'Brig', pron: 'bring', tts: 'bring', note: 'Retrieve' },
+				{ type: 'Search', eng: 'Take', goth: 'Nim', pron: 'nim', tts: 'nim', note: 'Grab' },
+				{ type: 'Search', eng: 'Carry', goth: 'Ber', pron: 'bear', tts: 'bear', note: 'Hold in mouth' },
+				{ type: 'Search', eng: 'Drop', goth: 'Drup', pron: 'droop', tts: 'droop', note: 'Release item' },
+				{ type: 'Search', eng: 'Lost', goth: 'Fralus', pron: 'fra-loos', tts: 'frah loose', note: 'Item lost' },
+				{ type: 'Search', eng: 'Here', goth: 'Her', pron: 'hair', tts: 'hair', note: 'Location' },
+				{ type: 'Search', eng: 'There', goth: 'Jainar', pron: 'jay-nar', tts: 'jay nar', note: 'Location' },
+				{ type: 'Search', eng: 'Near', goth: 'Nehwa', pron: 'nay-wha', tts: 'nay wha', note: 'Close' },
+				{ type: 'Search', eng: 'Far', goth: 'Ferra', pron: 'fair-ra', tts: 'fair rah', note: 'Distance' },
+
+				// 5. Utility
+				{ type: 'Utility', eng: 'Kennel', goth: 'Hleith', pron: 'hlay-th', tts: 'hlayth', note: 'Crate' },
+				{ type: 'Utility', eng: 'Bed', goth: 'Ligrs', pron: 'lig-rs', tts: 'lig ers', note: 'Place/Bed' },
+				{ type: 'Utility', eng: 'Water', goth: 'Wato', pron: 'wah-to', tts: 'wah toe', note: 'Drink' },
+				{ type: 'Utility', eng: 'Food', goth: 'Mat', pron: 'maht', tts: 'maht', note: 'Eat' },
+				{ type: 'Utility', eng: 'Door', goth: 'Daur', pron: 'dower', tts: 'dower', note: 'Exit/Entry' },
+				{ type: 'Utility', eng: 'House', goth: 'Razn', pron: 'raz-n', tts: 'razzen', note: 'Home' },
+				{ type: 'Utility', eng: 'Toilet', goth: 'Gardan', pron: 'gar-dan', tts: 'gar dan', note: 'Relieve' },
+				{ type: 'Utility', eng: 'Bath', goth: 'Thwah', pron: 'thwah', tts: 'thwah', note: 'Wash' },
+				{ type: 'Utility', eng: 'Paws', goth: 'Fotus', pron: 'fo-toos', tts: 'foe toos', note: 'Feet' },
+				{ type: 'Utility', eng: 'Leash', goth: 'Band', pron: 'band', tts: 'band', note: 'Tether' },
+				{ type: 'Utility', eng: 'Collar', goth: 'Hals', pron: 'hals', tts: 'halls', note: 'Neck' },
+				{ type: 'Utility', eng: 'Play', goth: 'Plaik', pron: 'play-k', tts: 'plake', note: 'Fun' },
+				{ type: 'Utility', eng: 'Ball', goth: 'Mota', pron: 'moh-ta', tts: 'mow tah', note: 'Toy' },
+				{ type: 'Utility', eng: 'Stick', goth: 'Triu', pron: 'tree-oo', tts: 'tree oo', note: 'Wood' },
+
+				// 6. Environmental
+				{ type: 'Environmental', eng: 'Man', goth: 'Guma', pron: 'goo-ma', tts: 'goo mah', note: 'Male' },
+				{ type: 'Environmental', eng: 'Woman', goth: 'Qino', pron: 'kwee-no', tts: 'kwee no', note: 'Female' },
+				{ type: 'Environmental', eng: 'Child', goth: 'Barn', pron: 'barn', tts: 'barn', note: 'Kid' },
+				{ type: 'Environmental', eng: 'Crowd', goth: 'Managei', pron: 'mana-gay', tts: 'mana gay', note: 'Many people' },
+				{ type: 'Environmental', eng: 'Fire', goth: 'Fon', pron: 'fawn', tts: 'fawn', note: 'Hot/Danger' },
+				{ type: 'Environmental', eng: 'Rain', goth: 'Rign', pron: 'rin', tts: 'rin', note: 'Weather' },
+				{ type: 'Environmental', eng: 'Wind', goth: 'Winds', pron: 'winds', tts: 'winds', note: 'Weather' },
+				{ type: 'Environmental', eng: 'Night', goth: 'Riqis', pron: 'ri-kwis', tts: 'rick wiss', note: 'Darkness' },
+				{ type: 'Environmental', eng: 'Day', goth: 'Liuhath', pron: 'loo-hath', tts: 'loo hath', note: 'Light' },
+				{ type: 'Environmental', eng: 'Loud', goth: 'Hlud', pron: 'hlood', tts: 'hlood', note: 'Noise' },
+				{ type: 'Environmental', eng: 'Danger', goth: 'Bjarg', pron: 'by-arg', tts: 'by arg', note: 'Threat' },
+				{ type: 'Environmental', eng: 'Safe', goth: 'Hails', pron: 'hails', tts: 'hails', note: 'Secure' },
+				{ type: 'Environmental', eng: 'Pain', goth: 'Sair', pron: 'sire', tts: 'sire', note: 'Hurt' },
+				{ type: 'Environmental', eng: 'Blood', goth: 'Bloth', pron: 'bloath', tts: 'bloath', note: 'Scent' },
+				{ type: 'Environmental', eng: 'Dead', goth: 'Naus', pron: 'nows', tts: 'mouse', note: 'Corpse' },
+				{ type: 'Environmental', eng: 'Alive', goth: 'Qius', pron: 'kwee-oos', tts: 'kwee oos', note: 'Living' },
+				{ type: 'Environmental', eng: 'Big', goth: 'Mikils', pron: 'mi-kils', tts: 'mick ills', note: 'Large' },
+				{ type: 'Environmental', eng: 'Small', goth: 'Leitils', pron: 'lay-tils', tts: 'lay tills', note: 'Little' },
+				{ type: 'Environmental', eng: 'One', goth: 'Ains', pron: 'ains', tts: 'ains', note: 'Count' },
+				{ type: 'Environmental', eng: 'Two', goth: 'Twai', pron: 'tway', tts: 'tway', note: 'Count' },
+				{ type: 'Environmental', eng: 'Three', goth: 'Thri', pron: 'three', tts: 'three', note: 'Count' },
+				{ type: 'Environmental', eng: 'All', goth: 'Alls', pron: 'alls', tts: 'alls', note: 'Whole group' },
+				{ type: 'Environmental', eng: 'Done', goth: 'Ust', pron: 'oost', tts: 'oost', note: 'Finish' },
+			]
+
+			const data = rawData.map((item, index) => ({ ...item, id: index + 1 }))
+
+			// ============================================================
+			// CONSTANTS
+			// ============================================================
+			const STORE_KEY = 'gothicK9Progress'
+			const categories = ['Obedience', 'Tactical', 'Movement', 'Search', 'Utility', 'Environmental']
+			const emojiMap = {
+				Obedience: '🎓', Tactical: '⚔️', Movement: '🏃',
+				Search: '🔍', Utility: '🔧', Environmental: '🌍',
+			}
+			const colorMap = {
+				Obedience: 'text-blue-500 bg-blue-900/20 border-blue-900/30',
+				Tactical: 'text-red-500 bg-red-900/20 border-red-900/30',
+				Movement: 'text-green-500 bg-green-900/20 border-green-900/30',
+				Search: 'text-yellow-500 bg-yellow-900/20 border-yellow-900/30',
+				Utility: 'text-purple-500 bg-purple-900/20 border-purple-900/30',
+				Environmental: 'text-stone-400 bg-stone-800 border-stone-700',
+			}
+			const progressColorMap = {
+				Obedience: 'bg-blue-500', Tactical: 'bg-red-500',
+				Movement: 'bg-green-500', Search: 'bg-yellow-500',
+				Utility: 'bg-purple-500', Environmental: 'bg-stone-500',
+			}
+
+			// ============================================================
+			// STATE
+			// ============================================================
+			let currentIndex = 0
+			let isFlipped = false
+			let isAnimating = false
+			let filteredData = [...data]
+			let activeCategory = 'All'
+			const synth = window.speechSynthesis
+			const openSections = new Set()
+
+			// ============================================================
+			// STORAGE
+			// ============================================================
+			function loadStore() {
+				try {
+					const stored = JSON.parse(localStorage.getItem(STORE_KEY))
+					return stored || { seen: [], mastered: [], lastPosition: 0, streak: 0, lastVisit: null, onboarded: false }
+				} catch {
+					return { seen: [], mastered: [], lastPosition: 0, streak: 0, lastVisit: null, onboarded: false }
+				}
+			}
+
+			function saveStore(store) {
+				localStorage.setItem(STORE_KEY, JSON.stringify(store))
+			}
+
+			function markSeen(id) {
+				const store = loadStore()
+				if (!store.seen.includes(id)) {
+					store.seen.push(id)
+					saveStore(store)
+				}
+			}
+
+			function toggleMastered(id) {
+				const store = loadStore()
+				const idx = store.mastered.indexOf(id)
+				if (idx === -1) {
+					store.mastered.push(id)
+				} else {
+					store.mastered.splice(idx, 1)
+				}
+				saveStore(store)
+				updateStats()
+				updateMasterButton()
+				renderList(document.getElementById('searchInput').value.toLowerCase())
+			}
+
+			function isMastered(id) {
+				return loadStore().mastered.includes(id)
+			}
+
+			function updateStreak() {
+				const store = loadStore()
+				const today = new Date().toISOString().split('T')[0]
+
+				if (store.lastVisit === today) return
+
+				if (store.lastVisit) {
+					const last = new Date(store.lastVisit)
+					const now = new Date(today)
+					const diffDays = Math.floor((now - last) / (1000 * 60 * 60 * 24))
+					if (diffDays === 1) {
+						store.streak = (store.streak || 0) + 1
+					} else if (diffDays > 1) {
+						store.streak = 1
+					}
+				} else {
+					store.streak = 1
+				}
+
+				store.lastVisit = today
+				saveStore(store)
+			}
+
+			function savePosition(index) {
+				const store = loadStore()
+				store.lastPosition = index
+				saveStore(store)
+			}
+
+			// ============================================================
+			// DOM ELEMENTS
+			// ============================================================
+			let cardInner, frontText, backWord, backPron, categoryEl, cardNote
+			let counterEl, progressBar, listContainer, autoPlayToggle
+			let cardPosition, masterBtn, masterIcon, masterLabel
+
+			// ============================================================
+			// INITIALIZATION
+			// ============================================================
+			function init() {
+				// Cache DOM refs
+				cardInner = document.getElementById('cardInner')
+				frontText = document.getElementById('cardFrontText')
+				backWord = document.getElementById('cardBackWord')
+				backPron = document.getElementById('cardBackPron')
+				categoryEl = document.getElementById('cardCategory')
+				cardNote = document.getElementById('cardNote')
+				counterEl = document.getElementById('counter')
+				progressBar = document.getElementById('progressBar')
+				listContainer = document.getElementById('commandList')
+				autoPlayToggle = document.getElementById('autoPlayToggle')
+				cardPosition = document.getElementById('cardPosition')
+				masterBtn = document.getElementById('masterBtn')
+				masterIcon = document.getElementById('masterIcon')
+				masterLabel = document.getElementById('masterLabel')
+
+				// Update streak
+				updateStreak()
+
+				// Resume position
+				const store = loadStore()
+				if (store.lastPosition && store.lastPosition < data.length) {
+					currentIndex = store.lastPosition
+				}
+
+				// Show onboarding if first visit
+				if (!store.onboarded) {
+					document.getElementById('onboarding').classList.remove('hidden')
+				}
+
+				renderList()
+				updateCard()
+				updateStats()
+				setupSwipe()
+
+				// Keyboard Listener
+				document.addEventListener('keydown', e => {
+					if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return
+
+					if (e.code === 'Space') {
+						e.preventDefault()
+						flipCard()
+					} else if (e.code === 'ArrowRight') {
+						nextCard()
+					} else if (e.code === 'ArrowLeft') {
+						prevCard()
+					} else if (e.code === 'KeyS' || e.code === 'KeyA') {
+						if (!isFlipped) flipCard()
+						setTimeout(() => speakWord(), 300)
+					} else if (e.code === 'KeyM') {
+						const item = filteredData[currentIndex]
+						if (item) toggleMastered(item.id)
+					}
+				})
+
+				// Search Listener
+				document.getElementById('searchInput').addEventListener('input', e => {
+					applyFilters()
+				})
+			}
+
+			// ============================================================
+			// CARD FUNCTIONS
+			// ============================================================
+			function updateCard() {
+				if (filteredData.length === 0) {
+					frontText.textContent = 'No matches'
+					counterEl.textContent = '0 / 0'
+					progressBar.style.width = '0%'
+					return
+				}
+
+				const item = filteredData[currentIndex]
+
+				// Update text
+				frontText.textContent = item.eng
+				backWord.textContent = item.goth
+				backPron.textContent = `/ ${item.pron} /`
+				cardNote.textContent = item.note || ''
+
+				// Position badge
+				cardPosition.textContent = `#${item.id}`
+
+				// Category with emoji
+				const emoji = emojiMap[item.type] || ''
+				categoryEl.textContent = `${emoji} ${item.type}`
+				categoryEl.className = `absolute top-6 text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full border ${colorMap[item.type] || colorMap['Environmental']}`
+
+				// Progress bar with category color
+				progressBar.className = `h-full transition-all duration-300 ${progressColorMap[item.type] || 'bg-amber-600'}`
+				progressBar.style.width = `${((currentIndex + 1) / filteredData.length) * 100}%`
+
+				// Counter
+				counterEl.textContent = `${currentIndex + 1} / ${filteredData.length}`
+
+				// Reset flip
+				if (isFlipped) {
+					cardInner.classList.remove('rotate-y-180')
+					isFlipped = false
+				}
+
+				// Mark seen
+				markSeen(item.id)
+				updateStats()
+				updateMasterButton()
+
+				// Save position
+				savePosition(currentIndex)
+
+				// Screen reader announcement
+				document.getElementById('cardAnnouncer').textContent =
+					`Card ${currentIndex + 1} of ${filteredData.length}. Command: ${item.eng}. Category: ${item.type}.`
+
+				// Highlight in sidebar
+				document.querySelectorAll('.list-item').forEach(el =>
+					el.classList.remove('bg-stone-700', 'border-amber-600'),
+				)
+
+				const catName = item.type
+				if (!openSections.has(catName)) {
+					toggleSection(catName)
+				}
+
+				setTimeout(() => {
+					const listItem = document.getElementById(`list-item-${item.id}`)
+					if (listItem) {
+						listItem.classList.add('bg-stone-700', 'border-amber-600')
+						listItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+					}
+				}, 50)
+			}
+
+			function flipCard() {
+				isFlipped = !isFlipped
+				if (isFlipped) {
+					cardInner.classList.add('rotate-y-180')
+					if (autoPlayToggle.checked) {
+						setTimeout(speakWord, 500)
+					}
+				} else {
+					cardInner.classList.remove('rotate-y-180')
+				}
+			}
+
+			function animateCard(direction, callback) {
+				if (isAnimating) return
+				isAnimating = true
+
+				const container = document.getElementById('cardContainer')
+				const outClass = direction === 'next' ? 'slide-next-out' : 'slide-prev-out'
+				const inClass = direction === 'next' ? 'slide-next-in' : 'slide-prev-in'
+
+				container.classList.add(outClass)
+
+				setTimeout(() => {
+					container.classList.remove(outClass)
+					callback()
+					container.classList.add(inClass)
+
+					setTimeout(() => {
+						container.classList.remove(inClass)
+						isAnimating = false
+					}, 150)
+				}, 150)
+			}
+
+			function nextCard() {
+				if (filteredData.length === 0) return
+				animateCard('next', () => {
+					currentIndex = (currentIndex + 1) % filteredData.length
+					updateCard()
+				})
+			}
+
+			function prevCard() {
+				if (currentIndex > 0) {
+					animateCard('prev', () => {
+						currentIndex--
+						updateCard()
+					})
+				}
+			}
+
+			function jumpTo(id) {
+				// Close drawer on mobile
+				if (window.innerWidth < 768) closeDrawer()
+
+				const index = filteredData.findIndex(d => d.id === id)
+				if (index !== -1) {
+					currentIndex = index
+					updateCard()
+				} else {
+					document.getElementById('searchInput').value = ''
+					activeCategory = 'All'
+					updateFilterChips()
+					filteredData = [...data]
+					openSections.clear()
+					renderList()
+					const newIndex = filteredData.findIndex(d => d.id === id)
+					currentIndex = newIndex
+					updateCard()
+				}
+			}
+
+			function toggleSection(catName) {
+				const container = document.getElementById(`items-${catName}`)
+				const arrow = document.getElementById(`arrow-${catName}`)
+
+				if (container) {
+					if (container.classList.contains('hidden')) {
+						container.classList.remove('hidden')
+						if (arrow) arrow.classList.add('rotate-180')
+						openSections.add(catName)
+					} else {
+						container.classList.add('hidden')
+						if (arrow) arrow.classList.remove('rotate-180')
+						openSections.delete(catName)
+					}
+				}
+			}
+
+			// ============================================================
+			// FILTER
+			// ============================================================
+			function filterByCategory(cat) {
+				activeCategory = cat
+				updateFilterChips()
+				applyFilters()
+			}
+
+			function updateFilterChips() {
+				document.querySelectorAll('.chip').forEach(c => {
+					if (c.dataset.cat === activeCategory) {
+						c.classList.add('chip-active')
+					} else {
+						c.classList.remove('chip-active')
+					}
+				})
+			}
+
+			function applyFilters() {
+				const searchTerm = document.getElementById('searchInput').value.toLowerCase()
+
+				filteredData = data.filter(item => {
+					const matchesCat = activeCategory === 'All' || item.type === activeCategory
+					const matchesSearch = !searchTerm ||
+						item.eng.toLowerCase().includes(searchTerm) ||
+						item.goth.toLowerCase().includes(searchTerm)
+					return matchesCat && matchesSearch
+				})
+
+				currentIndex = 0
+				isFlipped = false
+
+				// Auto-open sections during search
+				if (searchTerm) {
+					openSections.clear()
+					categories.forEach(cat => {
+						if (filteredData.some(d => d.type === cat)) openSections.add(cat)
+					})
+				}
+
+				renderList(searchTerm)
+				if (filteredData.length > 0) updateCard()
+			}
+
+			// ============================================================
+			// DRAWER
+			// ============================================================
+			function openDrawer() {
+				document.getElementById('sidebar').classList.remove('-translate-x-full')
+				document.getElementById('sidebar').classList.add('translate-x-0')
+				document.getElementById('drawerOverlay').classList.remove('hidden')
+				document.getElementById('drawerToggle').setAttribute('aria-expanded', 'true')
+				setTimeout(() => document.getElementById('searchInput').focus(), 300)
+			}
+
+			function closeDrawer() {
+				document.getElementById('sidebar').classList.add('-translate-x-full')
+				document.getElementById('sidebar').classList.remove('translate-x-0')
+				document.getElementById('drawerOverlay').classList.add('hidden')
+				document.getElementById('drawerToggle').setAttribute('aria-expanded', 'false')
+				document.getElementById('drawerToggle').focus()
+			}
+
+			function toggleDrawer() {
+				const sidebar = document.getElementById('sidebar')
+				if (sidebar.classList.contains('-translate-x-full')) {
+					openDrawer()
+				} else {
+					closeDrawer()
+				}
+			}
+
+			// ============================================================
+			// AUDIO
+			// ============================================================
+			function speakWord() {
+				if (synth.speaking) return
+
+				const item = filteredData[currentIndex]
+				const speed = parseFloat(document.getElementById('speedControl').value)
+				const utterThis = new SpeechSynthesisUtterance(item.tts)
+				utterThis.rate = speed
+				utterThis.pitch = 0.9
+				utterThis.lang = 'en-US'
+
+				const btn = document.getElementById('speakBtn')
+				const speakIcon = document.getElementById('speakIcon')
+				const soundWave = document.getElementById('soundWave')
+
+				btn.classList.add('bg-amber-500', 'text-white')
+				btn.classList.remove('bg-stone-100', 'text-stone-900')
+				speakIcon.classList.add('hidden')
+				soundWave.classList.remove('hidden')
+
+				utterThis.onend = function () {
+					btn.classList.remove('bg-amber-500', 'text-white')
+					btn.classList.add('bg-stone-100', 'text-stone-900')
+					speakIcon.classList.remove('hidden')
+					soundWave.classList.add('hidden')
+				}
+
+				synth.speak(utterThis)
+			}
+
+			// ============================================================
+			// UI UPDATES
+			// ============================================================
+			function updateStats() {
+				const store = loadStore()
+				document.getElementById('seenCount').textContent = store.seen.length
+				document.getElementById('masteredCount').textContent = store.mastered.length
+				document.getElementById('streakCount').textContent = store.streak || 0
+			}
+
+			function updateMasterButton() {
+				if (filteredData.length === 0) return
+				const item = filteredData[currentIndex]
+				const mastered = isMastered(item.id)
+
+				if (mastered) {
+					masterIcon.textContent = '✓'
+					masterLabel.textContent = 'Mastered'
+					masterBtn.classList.add('border-green-600', 'text-green-400')
+					masterBtn.classList.remove('border-stone-600', 'text-stone-400')
+				} else {
+					masterIcon.textContent = '☐'
+					masterLabel.textContent = 'Mark Mastered'
+					masterBtn.classList.remove('border-green-600', 'text-green-400')
+					masterBtn.classList.add('border-stone-600', 'text-stone-400')
+				}
+			}
+
+			// ============================================================
+			// SIDEBAR RENDER
+			// ============================================================
+			function renderList(searchTerm = '') {
+				listContainer.innerHTML = ''
+
+				const grouped = {}
+				categories.forEach(cat => (grouped[cat] = []))
+				data.forEach(item => {
+					if (grouped[item.type]) grouped[item.type].push(item)
+				})
+
+				categories.forEach(cat => {
+					const items = grouped[cat]
+					const visibleItems = items.filter(item => {
+						const matchesCat = activeCategory === 'All' || item.type === activeCategory
+						const matchesSearch = !searchTerm ||
+							item.eng.toLowerCase().includes(searchTerm) ||
+							item.goth.toLowerCase().includes(searchTerm)
+						return matchesCat && matchesSearch
+					})
+
+					if (visibleItems.length > 0) {
+						const catWrapper = document.createElement('div')
+						catWrapper.className = 'mb-1'
+
+						const headerBtn = document.createElement('button')
+						headerBtn.className = 'w-full flex items-center justify-between text-xs font-bold text-stone-400 uppercase p-2 hover:bg-stone-800 rounded transition-colors'
+
+						const isOpen = searchTerm.length > 0 || openSections.has(cat)
+						const rotation = isOpen ? 'rotate-180' : ''
+						const emoji = emojiMap[cat] || ''
+
+						headerBtn.innerHTML = `
+							<span class="${isOpen ? 'text-amber-500' : ''}">${emoji} ${cat} <span class="text-stone-600 text-[10px] ml-1">(${visibleItems.length})</span></span>
+							<svg id="arrow-${cat}" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 arrow-icon ${rotation}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+							</svg>
+						`
+						headerBtn.onclick = () => toggleSection(cat)
+						catWrapper.appendChild(headerBtn)
+
+						const itemsContainer = document.createElement('div')
+						itemsContainer.id = `items-${cat}`
+						itemsContainer.className = isOpen ? 'pl-2 space-y-1' : 'pl-2 space-y-1 hidden'
+						if (isOpen) openSections.add(cat)
+
+						visibleItems.forEach(item => {
+							const mastered = isMastered(item.id)
+							const masteredMark = mastered ? '<span class="text-green-400 text-xs mr-1">✓</span>' : ''
+
+							const div = document.createElement('div')
+							div.id = `list-item-${item.id}`
+							div.className = 'list-item p-2 rounded-lg border-l-4 border-transparent hover:bg-stone-800 cursor-pointer transition-all flex justify-between items-center group'
+							div.setAttribute('role', 'button')
+							div.setAttribute('tabindex', '0')
+							div.setAttribute('aria-label', `${item.eng} - ${item.goth}`)
+							div.onclick = () => jumpTo(item.id)
+							div.onkeydown = (e) => { if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); jumpTo(item.id) } }
+							div.innerHTML = `
+								<div class="pl-1">
+									<div class="font-bold text-stone-200 text-sm flex items-center">${masteredMark}${item.goth}</div>
+									<div class="text-xs text-stone-400">${item.eng}</div>
+								</div>
+								<button onclick="event.stopPropagation(); jumpTo(${item.id}); setTimeout(()=>speakWord(), 100);" class="opacity-0 group-hover:opacity-100 p-1 text-amber-500 hover:text-amber-400 transition-opacity" aria-label="Play ${item.goth}" tabindex="0">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+									</svg>
+								</button>
+							`
+							itemsContainer.appendChild(div)
+						})
+
+						catWrapper.appendChild(itemsContainer)
+						listContainer.appendChild(catWrapper)
+					}
+				})
+			}
+
+			// ============================================================
+			// ONBOARDING
+			// ============================================================
+			function dismissOnboarding() {
+				document.getElementById('onboarding').classList.add('hidden')
+				const store = loadStore()
+				store.onboarded = true
+				saveStore(store)
+			}
+
+			// ============================================================
+			// SWIPE
+			// ============================================================
+			function setupSwipe() {
+				const cardArea = document.getElementById('cardArea')
+				let touchStartX = 0
+				let touchStartY = 0
+
+				cardArea.addEventListener('touchstart', e => {
+					touchStartX = e.changedTouches[0].screenX
+					touchStartY = e.changedTouches[0].screenY
+				}, { passive: true })
+
+				cardArea.addEventListener('touchend', e => {
+					const touchEndX = e.changedTouches[0].screenX
+					const touchEndY = e.changedTouches[0].screenY
+					const diffX = touchStartX - touchEndX
+					const diffY = touchStartY - touchEndY
+
+					if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+						if (diffX > 0) nextCard()
+						else prevCard()
+					}
+				}, { passive: true })
+			}
+
+			// ============================================================
+			// INIT
+			// ============================================================
+			window.onload = init
+		</script>
+	</body>
+</html>
